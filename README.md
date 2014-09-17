@@ -1,4 +1,4 @@
-pa - public activity
+pa - public_activity
 ================
 
 s - socialization
