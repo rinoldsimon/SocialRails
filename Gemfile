@@ -15,3 +15,4 @@ gem 'gravtastic'
 gem 'carrierwave'
 #gem 'mini_magick'
 gem 'public_activity'
+gem "socialization"

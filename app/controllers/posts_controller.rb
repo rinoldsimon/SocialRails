@@ -14,6 +14,7 @@ class PostsController < ApplicationController
   def show
     @comments = @post.comments.all
     @comment = @post.comments.build
+    @likeable = @post
   end
 
   # GET /posts/new

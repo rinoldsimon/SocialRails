@@ -18,4 +18,7 @@ Rails.application.routes.draw do
 
   get '/users/:id', :to => 'users#show', :as => :user
 
+  get 'like' => 'users#like'
+  get 'unlike' => 'users#unlike'
+
 end

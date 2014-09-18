@@ -10,11 +10,14 @@
   <%= image_tag(@post.avatar_url, :width => 200) if @post.avatar.present? %>
 </p>
 
-<h3>Comments</h3>
-<%= link_to "Comments (#{@post.comments.count})", @post %>
+<h3>Comments:</h3>
+<%= link_to pluralize(@post.comments.count, 'comment'), @post %>
+<%= pluralize(@post.likers(User).count, 'like')%> 
+<%= render 'shared/like_form' %> 
+
 <% @comments.each do |comment| %>
     <p><%= comment.body %> <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-    <%= time_ago_in_words(comment.created_at) %> ago </p>
+    <%= time_ago_in_words(comment.created_at) %> ago 
 <% end %>
 <%= render 'comments/form' %>
 
