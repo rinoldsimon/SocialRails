@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
+  get 'users/show'
+
+  resources :friendships
+
+  get 'activities/index'
+
   resources :comments
 
   resources :posts
@@ -7,5 +15,7 @@ Rails.application.routes.draw do
 
   get 'home/index'
   root :to => 'home#index' 
+
+  get '/users/:id', :to => 'users#show', :as => :user
 
 end

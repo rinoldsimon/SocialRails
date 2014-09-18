@@ -1,0 +1,33 @@
+<h2> My Profile </h2>
+<p>Username: <%=h @user.name %></p>
+<h2>Friends you follow</h2>
+<ul>
+  <% for friendship in @user.friendships %>
+    <li>
+      <%=h friendship.friend.name %>
+      (<%= link_to "remove", friendship, :method => :delete %>)
+    </li>
+  <% end %>
+</ul>
+
+
+<h2>Friends following you</h2>
+<ul>
+  <% for user in @user.inverse_friends %>
+    <li><%=h user.name %></li>
+  <% end %>
+</ul>
+
+<h1><%= @user.name %>'s Profile</h1>
+
+<% if current_user %>
+  <% if current_user.friends.include? @user %>
+    <%= link_to "Remove Friend", current_user.friendships.find_by_friend_id(@user.id), method: :delete %>
+  <% else %>
+    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post %>
+  <% end %>
+<% end %>
+
+<h2>Posts</h2>
+
+<%= render @user.posts %>
