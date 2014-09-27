@@ -2,24 +2,66 @@
 
 <p>
   <strong>Content:</strong>
+  <% if current_user.id == @post.user_id %>
+  <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>
+  <% else %>
   <%= @post.content %>
+  <% end %>
 </p>
 
 <p>
-  <strong>Attachment:</strong><br />
-  <%= image_tag(@post.avatar_url, :width => 200) if @post.avatar.present? %>
+<% if @post.tags? %>
+  <strong>Tags:</strong>
+  <% @users = User.all %>
+  
+  <% tag=@post.tags.split(",") %>
+    <% tag.each do |t| %>
+      <% for user in @users %>
+        <% if t == user.name %>
+          <%= link_to t, user %>
+        <% end %>
+      <% end %>
+    <% end %>
+<% end %>
 </p>
+
+<p>
+  <strong>Time:</strong>
+  <%= time_ago_in_words(@post.created_at) %> ago
+</p>
+
+<% if @post.avatar.present? %>
+<p>
+  <strong>Attachment:</strong><br />
+  <%= image_tag(@post.avatar_url, :width => 200) %>
+</p>
+<% end %>
+
+<div class="<%= @post.class %>-<%= @post.id %>">
+<%= render 'shared/like_form', likeable: @post %> 
+<div class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
+</div>
 
 <h3>Comments:</h3>
 <%= link_to pluralize(@post.comments.count, 'comment'), @post %>
-<%= pluralize(@post.likers(User).count, 'like')%> 
-<%= render 'shared/like_form' %> 
-
 <% @comments.each do |comment| %>
-    <p><%= comment.body %> <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-    <%= time_ago_in_words(comment.created_at) %> ago 
+    
+    <p><b><%= comment.user.name %></b>: 
+          <% if current_user.id == comment.user_id %>
+          <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %> 
+          <% else %>
+          <%= comment.body %>
+          <% end %>
+    <% if current_user.id == comment.user_id %>
+    <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Edit', edit_comment_path(comment) %>
+    <% end %>
+    <%= time_ago_in_words(comment.created_at) %> ago </p>
+    
 <% end %>
 <%= render 'comments/form' %>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
+<% if current_user.id == @post.user_id %>
+<%= link_to 'Edit', edit_post_path(@post) %>
+<% end %>
 <%= link_to 'Back', posts_path %>

@@ -1,6 +1,16 @@
 <h3> "User List" </h3>
 <% for user in @users %>
-<%= link_to user.name, user %>
+
+<% if current_user.id != user.id %>
+
+      <%= link_to user.name, user %>
       <strong><%=h user.name %></strong>
-      <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %><br>
+      <%if current_user.friends.include? user %>
+      <%= link_to "Remove Friend", friendship_path(current_user.friendships.find_by_friend_id(user)), :method => :delete %>
+      <% else %>
+      <%= link_to "Add Friend", friendships_path(:friend_id => user), :method => :post %>
+      <% end %><br>
+
+<% end %>
+
 <% end %>

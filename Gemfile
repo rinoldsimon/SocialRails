@@ -10,9 +10,13 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
+
 gem 'devise'
 gem 'gravtastic'
 gem 'carrierwave'
 #gem 'mini_magick'
 gem 'public_activity'
 gem "socialization"
+#gem 'acts-as-taggable-on'
+gem "select2-rails"
+gem 'best_in_place', :git => 'https://github.com/aaronchi/best_in_place.git'

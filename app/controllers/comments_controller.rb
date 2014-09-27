@@ -19,6 +19,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    @comment = current_user.comments.find(params[:id])
   end
 
   # POST /comments
@@ -57,6 +58,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment.destroy
+    #@comment = current_user.comments.find(params[:id])
     respond_to do |format|
       format.html { redirect_to :back, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }

@@ -20,6 +20,8 @@
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
   <div><%= f.file_field :avatar %></div>
+       <%= f.check_box :remove_avatar %>
+       Remove Profile picture
 
   <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %></div>

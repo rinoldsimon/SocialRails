@@ -1,26 +1,51 @@
+<% if current_user.id == @user.id %>
 <h2> My Profile </h2>
+<% else %>
+<h2> <%= @user.name %>'s Profile </h2>
+<% end %>
+
 <p>Username: <%=h @user.name %></p>
+
+<p>Profile picture:</p>
+<% if @user.avatar? %>
+<%= image_tag(@user.avatar_url, :width => 100) %>
+<% else %>
+<%= image_tag @user.gravatar_url %>
+<% end %>
+
+<% if current_user.id != @user.id %>
+<h2>Friends <%= @user.name %> follow</h2>
+<% else %> 
 <h2>Friends you follow</h2>
+<% end %>
+
 <ul>
   <% for friendship in @user.friendships %>
     <li>
       <%=h friendship.friend.name %>
+      <% if current_user.id != friendship.friend.id %>
       (<%= link_to "remove", friendship, :method => :delete %>)
+      <% end %>
     </li>
   <% end %>
 </ul>
 
+<% if current_user.id != @user.id %>
+<h2>Friends following <%= @user.name %> </h2>
+<% else %>
+<h2>Friends following you </h2>
+<% end %>
 
-<h2>Friends following you</h2>
 <ul>
   <% for user in @user.inverse_friends %>
     <li><%=h user.name %></li>
   <% end %>
 </ul>
 
-<h1><%= @user.name %>'s Profile</h1>
+<% if current_user.id != @user.id %>
+<h2> <%= @user.name %>'s Activities </h2>
 
-<% if current_user %>
+<% if current_user.id != @user.id %>
   <% if current_user.friends.include? @user %>
     <%= link_to "Remove Friend", current_user.friendships.find_by_friend_id(@user.id), method: :delete %>
   <% else %>
@@ -31,3 +56,4 @@
 <h2>Posts</h2>
 
 <%= render @user.posts %>
+<% end %>

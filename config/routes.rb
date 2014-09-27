@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :friendships
 
   get 'activities/index'
+  get 'activities/user'
 
   resources :comments
 
