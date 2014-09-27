@@ -57,6 +57,10 @@
     <%= link_to 'Edit', edit_comment_path(comment) %>
     <% end %>
     <%= time_ago_in_words(comment.created_at) %> ago </p>
+    <div class="<%= comment.class %>-<%= comment.id %>">
+    <%= render 'shared/like_form', likeable: comment %>
+    <div class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
+    </div>
     
 <% end %>
 <%= render 'comments/form' %>
