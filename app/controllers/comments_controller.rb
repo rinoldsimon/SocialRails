@@ -5,22 +5,26 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = current_user.comments
+    @comments = Comment.all
+    redirect_to root_url
   end
 
   # GET /comments/1
   # GET /comments/1.json
   def show
+    redirect_to root_url
   end
 
   # GET /comments/new
   def new
     @comment = Comment.new
+    redirect_to root_url
   end
 
   # GET /comments/1/edit
   def edit
     @comment = current_user.comments.find(params[:id])
+    redirect_to root_url
   end
 
   # POST /comments

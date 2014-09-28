@@ -1,0 +1,107 @@
+<%= notice %>
+<h1>Listing posts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User id</th>
+      <th>User name</th>
+      <th>User pic</th>
+      <th>Content</th>
+      <th>Attachment</th>
+      <th>Tags</th>
+      <th>Time</th>
+      <!-- <th>Avatar</th> -->
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.user_id %></td>
+        <td><%= post.user.name %></td>
+        <td><% if post.user.avatar? %>
+            <%= image_tag(post.user.avatar_url, :width => 100) %>
+            <% else %>
+            <%= image_tag post.user.gravatar_url %>
+            <% end %>
+        </td>
+        <td><% if current_user.id == post.user_id %>
+            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %>
+            <% else %>
+            <%= post.content %>
+            <% end %>
+        </td>
+        <td><% if post.avatar.present? %>
+            <%= image_tag(post.avatar_url, :width => 50) %>
+            <% end %>
+        </td>
+        <td><% if post.tags? %>
+            <% for user in @users %>
+            <% if post.tags == user.name %>
+            <%=link_to post.tags, user %>
+            <% end %>
+            <% end %>
+            <% end %>
+        </td>
+        <!-- <td><%# post.created_at.to_time %></td> -->
+        <td><%= time_ago_in_words(post.created_at) %> ago</td>
+        <!-- <td><%# image_tag post.avatar_url(:thumb) if post.avatar? %></td> -->
+        <td><div class="<%= post.class %>-<%= post.id %>">
+            <%= render 'shared/like_form', likeable: post %>
+            <div class="likes"><%= pluralize(post.likers(User).count, 'like')%></div>
+            </div>
+        </td>
+
+        <!-- <td><%# link_to 'Show', post %></td> -->
+
+        <% if current_user.id == post.user_id %>
+        <!-- <td><%# link_to 'Edit', edit_post_path(post) %></td> -->
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+
+      </tr>
+      <br>
+
+         <td><h3>Comments:</h3></td>
+         <td><%= link_to pluralize(post.comments.count, 'comment'), post %>
+         </td>
+
+         
+         <% post.comments.each do |comment| %>
+    
+         <td><b><%= comment.user.name %></b>
+          <% if current_user.id == comment.user_id %>
+          <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %> 
+          <% else %>
+          <%= comment.body %>
+          <% end %>
+          </td>
+
+          <td><%= time_ago_in_words(comment.created_at) %> ago</td>
+          <td><div class="<%= comment.class %>-<%= comment.id %>">
+              <%= render 'shared/like_form', likeable: comment %>
+              <div class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
+              </div>
+          </td>
+
+          <td>
+          <% if current_user.id == comment.user_id %>
+          <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+          <!-- <%# link_to 'Edit', edit_comment_path(comment) %> -->
+          <% end %>
+          </td>
+
+          <% end %>
+          
+          <td><%= link_to "New comment", post %>
+          </td>
+
+
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'New Post', new_post_path %>

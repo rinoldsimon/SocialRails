@@ -1,8 +1,16 @@
-<% @posts = Post.all %>
-<% @posts.each do |post| %>
 <%= div_for comment do %>
-  <h2>Commented on Post <%= link_to_unless_current comment.post_id, post %></h2>
+  <h2>Commented on <%= link_to_unless_current comment.post.class, comment.post %></h2>
   <%= simple_format comment.body %>
+  <%= time_ago_in_words(comment.created_at) %> ago
   <em>added by <%= link_to comment.user.name, comment.user %></em>
+  <%= pluralize(comment.likers(User).count, 'like')%>
+
+  <% if comment.likers(User).count > 0 %>
+  <% users= comment.likers(User) %>                 
+    (<% for u in users %>
+     | <%= link_to u.name, u %>
+     <% end %>|)
+  <% end %>
+
 <% end %>
-<% end %>
+<hr>

@@ -1,4 +1,11 @@
+<%= notice %>
 <h3> "User List" </h3>
+
+<form method="get", id="search-form">
+  <%= text_field_tag :search, params[:search], placeholder: "Search Users" %>
+  <%= submit_tag "Search", :name => nil %>
+</form>
+
 <% for user in @users %>
 
 <% if current_user.id != user.id %>

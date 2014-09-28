@@ -6,20 +6,24 @@ class FriendshipsController < ApplicationController
   # GET /friendships.json
   def index
     @friendships = Friendship.all
+    redirect_to root_url
   end
 
   # GET /friendships/1
   # GET /friendships/1.json
   def show
+    redirect_to root_url
   end
 
   # GET /friendships/new
   def new
     @friendship = Friendship.new
+    redirect_to root_url
   end
 
   # GET /friendships/1/edit
   def edit
+    redirect_to root_url
   end
 
   # POST /friendships

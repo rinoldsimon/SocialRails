@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
   has_many :inverse_friends, :through => :inverse_friendships, :source => :user
 
   acts_as_liker
+
+  def self.search(query)
+    where("name like ?", "%#{query}%") 
+  end
 end

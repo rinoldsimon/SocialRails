@@ -5,7 +5,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.order("id DESC").all
+    #@posts = Post.order("id DESC").all
+    redirect_to root_url
     #@posts = current_user.posts
   end
 
@@ -24,6 +25,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   def edit
     @post = current_user.posts.find(params[:id])
+    redirect_to root_url
   end
 
   # POST /posts
@@ -34,7 +36,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to :back, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -64,7 +66,7 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

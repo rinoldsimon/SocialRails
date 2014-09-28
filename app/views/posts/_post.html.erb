@@ -1,6 +1,18 @@
 <%= div_for post do %>
-  <%= image_tag post.avatar, size: "120x120" if post.avatar.present?%>
-  <h2><%= link_to_unless_current post.class, post %></h2>
+  <h2>Added a <%= link_to_unless_current post.class, post %></h2>
   <%= simple_format post.content %>
+  <%= image_tag post.avatar, size: "120x120" if post.avatar.present?%>
+  <%= time_ago_in_words(post.created_at) %> ago
   <em>added by <%= link_to post.user.name, post.user %></em>
+  <%= link_to pluralize(post.comments.count, 'comment'), post %>
+  <%= pluralize(post.likers(User).count, 'like')%>
+
+  <% if post.likers(User).count > 0 %>
+  <% users= post.likers(User) %>                 
+    (<% for u in users %>
+     | <%= link_to u.name, u %>
+     <% end %>|)
+  <% end %>
+
+  <hr />
 <% end %>

@@ -38,7 +38,7 @@
 <% end %>
 
 <div class="<%= @post.class %>-<%= @post.id %>">
-<%= render 'shared/like_form', likeable: @post %> 
+<%= render 'shared/like_form', likeable: @post %>
 <div class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
 </div>
 
