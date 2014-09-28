@@ -1,3 +1,7 @@
+liked a 
+
 <% if activity.trackable %>
-liked a <%= link_to activity.trackable.likeable.class, activity.trackable.likeable %>
+<%= link_to activity.trackable.likeable.class, activity.trackable.likeable %>
+<% else %>
+  post/comment which has since been removed
 <% end %><br>

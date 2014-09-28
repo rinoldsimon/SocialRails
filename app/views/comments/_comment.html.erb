@@ -1,0 +1,8 @@
+<% @posts = Post.all %>
+<% @posts.each do |post| %>
+<%= div_for comment do %>
+  <h2>Commented on Post <%= link_to_unless_current comment.post_id, post %></h2>
+  <%= simple_format comment.body %>
+  <em>added by <%= link_to comment.user.name, comment.user %></em>
+<% end %>
+<% end %>

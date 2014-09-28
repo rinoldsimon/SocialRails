@@ -1,6 +1,6 @@
 <%= div_for post do %>
   <%= image_tag post.avatar, size: "120x120" if post.avatar.present?%>
-  <h2><%= link_to_unless_current post.id, post %></h2>
+  <h2><%= link_to_unless_current post.class, post %></h2>
   <%= simple_format post.content %>
   <em>added by <%= link_to post.user.name, post.user %></em>
 <% end %>
