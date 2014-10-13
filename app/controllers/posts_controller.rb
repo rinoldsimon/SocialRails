@@ -20,6 +20,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    redirect_to root_url
   end
 
   # GET /posts/1/edit

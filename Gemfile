@@ -21,3 +21,4 @@ gem "socialization"
 #gem 'acts-as-taggable-on'
 gem "select2-rails"
 gem 'best_in_place', :git => 'https://github.com/aaronchi/best_in_place.git'
+gem 'will_paginate'

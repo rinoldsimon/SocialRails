@@ -1,5 +1,5 @@
 <%= notice %>
-<h1>Listing posts</h1>
+<h1>Listing posts and comments</h1>
 
 <table>
   <thead>
@@ -20,15 +20,15 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.user_id %></td>
-        <td><%= post.user.name %></td>
+        <td><%= link_to post.user.name, post.user %></td>
         <td><% if post.user.avatar? %>
-            <%= image_tag(post.user.avatar_url, :width => 100) %>
+            <%= image_tag(post.user.avatar_url, :width => 40) %>
             <% else %>
-            <%= image_tag post.user.gravatar_url %>
+            <%= image_tag post.user.gravatar_url, :width => 40 %>
             <% end %>
         </td>
         <td><% if current_user.id == post.user_id %>
-            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %>
+            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the content to edit)
             <% else %>
             <%= post.content %>
             <% end %>
@@ -46,7 +46,7 @@
             <% end %>
         </td>
         <!-- <td><%# post.created_at.to_time %></td> -->
-        <td><%= time_ago_in_words(post.created_at) %> ago</td>
+        <td><small><em><%= time_ago_in_words(post.created_at) %> ago </em>(<%= post.created_at.to_time.to_formatted_s(:db) %>)</small></td>
         <!-- <td><%# image_tag post.avatar_url(:thumb) if post.avatar? %></td> -->
         <td><div class="<%= post.class %>-<%= post.id %>">
             <%= render 'shared/like_form', likeable: post %>
@@ -71,9 +71,14 @@
          
          <% post.comments.each do |comment| %>
     
-         <td><b><%= comment.user.name %></b>
+         <td><b><%= link_to comment.user.name, comment.user %></b>
+              <% if comment.user.avatar? %>
+                <%= image_tag comment.user.avatar, :width => 30 %>
+              <% else %>
+                <%= image_tag (comment.user.gravatar_url), :width => 30 %>
+              <% end %>
           <% if current_user.id == comment.user_id %>
-          <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %> 
+          <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %>(click on the content to edit)
           <% else %>
           <%= comment.body %>
           <% end %>
@@ -89,7 +94,7 @@
           <td>
           <% if current_user.id == comment.user_id %>
           <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-          <!-- <%# link_to 'Edit', edit_comment_path(comment) %> -->
+          <%# link_to 'Edit', edit_comment_path(comment) %>
           <% end %>
           </td>
 
@@ -104,4 +109,4 @@
 </table>
 
 
-<%= link_to 'New Post', new_post_path %>
+<%# link_to 'New Post', new_post_path %>

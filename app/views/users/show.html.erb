@@ -1,7 +1,7 @@
 <% if current_user.id == @user.id %>
 <h2> My Profile </h2>
 <% else %>
-<h2> <%= @user.name %>'s Profile </h2>
+<h2> <%= @user.name.pluralize %> </h2>
 <% end %>
 
 <p>Username: <%=h @user.name %></p>
@@ -22,9 +22,9 @@
 <ul>
   <% for friendship in @user.friendships %>
     <li>
-      <%=h friendship.friend.name %>
+      <%=h link_to friendship.friend.name, friendship.friend %>
       <% if current_user.id != friendship.friend.id %>
-      (<%= link_to "remove", friendship, :method => :delete %>)
+      (<%= link_to "Remove Friendship", friendship, :method => :delete %>)
       <% end %>
     </li>
   <% end %>
@@ -38,7 +38,7 @@
 
 <ul>
   <% for user in @user.inverse_friends %>
-    <li><%=h user.name %></li>
+    <li><%=h link_to user.name, user %></li>
   <% end %>
 </ul>
 

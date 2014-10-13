@@ -22,6 +22,7 @@ class UsersController < ApplicationController
       end
   current_user.like!(@likeable)
   end
+  
   def unlike
       if params[:likeable_type] == "Post"
           @likeable = Post.find(params[:likeable_id])
