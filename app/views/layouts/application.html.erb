@@ -30,6 +30,14 @@
 <%= link_to "Users", '/users/index' %>
 <%= link_to "My profile", current_user %>
 
+<% if user_signed_in? %>
+
+<%= current_user.last_sign_in_at.to_date %>
+<%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %>
+<%= current_user.sign_in_count %>
+
+<% end %>
+
 <%= yield %>
 
 </body>
