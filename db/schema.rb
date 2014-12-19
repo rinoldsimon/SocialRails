@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141007130758) do
+ActiveRecord::Schema.define(version: 20141219151033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,13 @@ ActiveRecord::Schema.define(version: 20141007130758) do
 
   add_index "mentions", ["mentionable_id", "mentionable_type"], name: "fk_mentionables", using: :btree
   add_index "mentions", ["mentioner_id", "mentioner_type"], name: "fk_mentions", using: :btree
+
+  create_table "messages", force: true do |t|
+    t.integer  "user_id"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "posts", force: true do |t|
     t.integer  "user_id"

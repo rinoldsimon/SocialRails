@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'messages/index'
+
   get 'home/index'
   root :to => 'home#index' 
 
