@@ -24,17 +24,19 @@
           <%= link_to "Sign-in", new_user_session_path %>
 <% end %>
 
+<% if user_signed_in? %>
+
 <%= link_to "Home", root_url %>
 <%= link_to "News feed", '/activities/index' %>
 <%= link_to "My activities", '/activities/user' %>
 <%= link_to "Users", '/users/index' %>
 <%= link_to "My profile", current_user %>
-
-<% if user_signed_in? %>
-
 <%= current_user.last_sign_in_at.to_date %>
 <%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %>
 <%= current_user.sign_in_count %>
+<%= link_to "New Message", '/messages/index' %>
+<%= link_to "My Messages", '/messages/show' %>
+<%= link_to "Sent Messages", '/messages/sent' %>
 
 <% end %>
 

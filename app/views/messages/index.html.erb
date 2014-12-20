@@ -1,2 +1,6 @@
-<h1>Messages#index</h1>
-<p>Find me in app/views/messages/index.html.erb</p>
+<br>
+<% for user in @users %>
+<% if current_user.id != user.id %>
+    <%= user.name %><%= link_to "New Message", new_message_path(:recv_uid=> user.id) %>
+<% end %>
+<% end %>

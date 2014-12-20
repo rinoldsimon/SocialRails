@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'messages/index'
+  get 'messages/sent'
 
   get 'home/index'
   root :to => 'home#index' 
@@ -18,5 +19,6 @@ Rails.application.routes.draw do
   resources :comments
   resources :posts
   resources :friendships
+  resources :messages
 
 end
