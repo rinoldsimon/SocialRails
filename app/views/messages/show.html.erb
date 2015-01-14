@@ -5,7 +5,9 @@
 
    <% @name = User.where(:id => m.user_id) %>
    <% @name.each do |n| %>
-     <%= link_to n.name, n =%> <br>
+     <%= link_to n.name, n =%>
    <% end %>
+<em><%= time_ago_in_words(m.created_at) %> ago </em> 
+<%= m.created_at.to_time.to_formatted_s(:db) %> <br>
 
 <% end %>

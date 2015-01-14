@@ -37,6 +37,10 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
+    bootstrap-sass (3.3.1.0)
+      sass (~> 3.2)
+    bootstrap-will_paginate (0.0.10)
+      will_paginate
     builder (3.2.2)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
@@ -161,6 +165,8 @@ PLATFORMS
 
 DEPENDENCIES
   best_in_place!
+  bootstrap-sass
+  bootstrap-will_paginate
   carrierwave
   coffee-rails (~> 4.0.0)
   devise
