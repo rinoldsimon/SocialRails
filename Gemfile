@@ -22,3 +22,4 @@ gem "socialization"
 gem "select2-rails"
 gem 'best_in_place', :git => 'https://github.com/aaronchi/best_in_place.git'
 gem 'will_paginate'
+gem 'mandrill_mailer'

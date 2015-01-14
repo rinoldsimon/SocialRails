@@ -57,6 +57,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
+    excon (0.40.0)
     execjs (2.2.1)
     gravtastic (3.2.6)
     hike (1.2.3)
@@ -71,6 +72,13 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mandrill-api (1.0.53)
+      excon (>= 0.16.0, < 1.0)
+      json (>= 1.7.7, < 2.0)
+    mandrill_mailer (0.4.11)
+      actionpack
+      activesupport
+      mandrill-api (~> 1.0.9)
     mime-types (1.25.1)
     minitest (5.4.2)
     multi_json (1.10.1)
@@ -159,6 +167,7 @@ DEPENDENCIES
   gravtastic
   jbuilder (~> 2.0)
   jquery-rails
+  mandrill_mailer
   pg
   public_activity
   rails (= 4.1.4)

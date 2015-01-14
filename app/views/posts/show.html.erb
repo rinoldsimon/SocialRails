@@ -3,7 +3,7 @@
 <p>
   <strong>Content:</strong>
   <% if current_user.id == @post.user_id %>
-  <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the content to edit)
+  <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the post to edit)
   <% else %>
   <%= @post.content %>
   <% end %>

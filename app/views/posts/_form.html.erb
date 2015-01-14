@@ -14,7 +14,7 @@
 
   <div class="field">
     <%= f.label :content %><br>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, required: true %>
   </div>
   <div>
     <%= f.file_field :avatar %>
@@ -26,7 +26,9 @@
   <select id="tag" name="post[tags]" multiple>
         <% @users = User.all %>
         <% @users.each do |u| %>
+          <% if current_user != u %>
           <option value="<%= u.name %>"><%= u.name %></option>
+          <% end %>
         <% end %>
   </select>
 
