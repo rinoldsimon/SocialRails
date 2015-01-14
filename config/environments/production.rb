@@ -98,5 +98,4 @@ Rails.application.configure do
   MandrillMailer.configure do |config|
   config.api_key = ENV['-R8pMm9TtJUpyvU44DGtbg']
   end
-
 end
