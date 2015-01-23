@@ -40,8 +40,12 @@
 
               <% if %w{jpg png jpg gif bmp}.include?(extension) %>
                 <%= link_to image_tag(post.avatar_url, :width => 50), post.avatar_url %>
+              <% elsif %w{mp4}.include?(extension) %>
+                <%= link_to "play mp4", post.avatar_url %>
+              <% elsif %w{mp3}.include?(extension) %>
+                <%= link_to "play mp3", post.avatar_url %>
               <% else %>
-                <%= link_to "download attatchment", post.avatar_url %> <%= (extension) %>
+                <%= link_to "download attatchment", post.avatar_url %> <%= extension %>
               <% end %>
               
             <% end %>
