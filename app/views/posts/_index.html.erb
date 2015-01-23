@@ -34,7 +34,16 @@
             <% end %>
         </td>
         <td><% if post.avatar.present? %>
-            <%= link_to image_tag(post.avatar_url, :width => 50), post.avatar_url %>
+
+              <% file = post.avatar.url %>
+              <% extension = post.avatar.file.extension.downcase %>
+
+              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
+                <%= link_to image_tag(post.avatar_url, :width => 50), post.avatar_url %>
+              <% else %>
+                <%= link_to "download attatchment", post.avatar_url %> <%= (extension) %>
+              <% end %>
+              
             <% end %>
         </td>
         <td><% if post.tags? %>
