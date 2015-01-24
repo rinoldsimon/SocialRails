@@ -24,4 +24,12 @@ class User < ActiveRecord::Base
   end
 
   has_many :messages
+
+  after_create :send_signup_email 
+
+  private
+
+    def send_signup_email
+      UserNotifier.send_signup_email(self).deliver
+    end
 end
