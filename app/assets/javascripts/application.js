@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require best_in_place.purr
 //= require best_in_place
+//= require jquery.turbolinks
 //= require turbolinks
 //= require select2
 //= require bootstrap

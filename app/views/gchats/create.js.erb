@@ -1,0 +1,6 @@
+<% if @gchat.new_record? %>
+  alert('Your message cannot be saved.');
+<% else %>
+  $('#gchats').find('.media-list').prepend('<%= j render @gchat %>');
+  $('#gchat_body').val('');
+<% end %>

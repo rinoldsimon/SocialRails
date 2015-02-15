@@ -1,8 +1,13 @@
 <li class="media comment">
-  <%= link_to image_tag(gchat.user.avatar_url, alt: gchat.user.name, class: "media-object"),
-              gchat.user.profile_url, target: '_blank', class: 'pull-left' %>
+  <% if current_user.avatar? %>
+    <%= link_to image_tag(gchat.user.avatar_url, :width => 50, alt: gchat.user.name, class: "media-object"),
+              gchat.user, target: '_blank', class: 'pull-left' %>
+  <% else %>
+    <%= link_to image_tag(gchat.user.gravatar_url, :width => 50, alt: gchat.user.name, class: "media-object"),
+              gchat.user, target: '_blank', class: 'pull-left' %>
+  <% end %>
   <div class="media-body">
-    <h4 class="media-heading"><%= link_to gchat.user.name, gchat.user.profile_url, target: '_blank' %> says
+    <h4 class="media-heading"><%= link_to gchat.user.name, gchat.user, target: '_blank' %> says
       <small class="text-muted">[at <%= gchat.created_at.strftime('%-d %B %Y, %H:%M:%S') %>]</small></h4>
     <p><%= gchat.body %></p>
   </div>
