@@ -32,4 +32,6 @@ class User < ActiveRecord::Base
     def send_signup_email
       UserNotifier.send_signup_email(self).deliver
     end
+
+  has_many :gchats, dependent: :delete_all
 end
