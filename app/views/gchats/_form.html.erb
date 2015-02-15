@@ -1,7 +1,7 @@
 <div class="well">
   <%= form_for @gchat, remote: true do |f| %>
     <div class="form-group">
-      <%= f.label :body, 'Enter your comment:' %>
+      <%= f.label :body, 'Enter your message:' %>
       <%= f.text_area :body, rows: 3, class: 'form-control', required: true, maxlength: 2000 %>
       <small class="label label-warning">Cannot be blank or contain more than 2000 symbols.</small>
     </div>

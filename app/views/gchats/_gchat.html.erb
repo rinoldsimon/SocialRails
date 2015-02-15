@@ -8,7 +8,7 @@
   <% end %>
   <div class="media-body">
     <h4 class="media-heading"><%= link_to gchat.user.name, gchat.user, target: '_blank' %> says
-      <small class="text-muted">[at <%= gchat.created_at.strftime('%-d %B %Y, %H:%M:%S') %>]</small></h4>
+      <small class="text-muted">[at <%= gchat.created_at.to_time.strftime('%-d %B %Y, %H:%M:%S') %>]</small></h4>
     <p><%= gchat.body %></p>
   </div>
 </li>
