@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   resources :friendships
   resources :messages
 
+  resources :gchats, only: [:new, :create]
+  get 'gchats/new'
+  
 end
