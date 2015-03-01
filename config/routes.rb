@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   get 'home/index'
   root :to => 'home#index' 
 
-  devise_for :users
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
   get 'users/index'
   get 'users/show'
   get '/users/:id', :to => 'users#show', :as => :user
