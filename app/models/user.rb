@@ -2,7 +2,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable
 
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -35,26 +36,6 @@ class User < ActiveRecord::Base
 
   has_many :gchats, dependent: :delete_all
 
-  devise :omniauthable, :omniauth_providers => [:facebook]
-  def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name # assuming the user model has a name
-      user.remote_avatar_url = auth.info.image.gsub('http://','https://') # assuming the user model has an image 
-    end
-  end
-
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-        user.name = data["name"] if user.name.blank?
-      end
-    end
-  end
-
-  devise :omniauthable, :omniauth_providers => [:github]
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -67,6 +48,10 @@ class User < ActiveRecord::Base
   def self.new_with_session(params, session)
     super.tap do |user|
       if data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+        user.name = data["name"] if user.name.blank?
+
+      elsif data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
         user.name = data["name"] if user.name.blank?
       end
