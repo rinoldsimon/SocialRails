@@ -1,7 +1,9 @@
-pa - public_activity
-================
+SocialRails is a social networking site that I built with Ruby on Rails, Bootstrap, and jQuery 
 
-s - socialization
-================
+### How to get  up and running
 
-app that makes use of gem public_activity and gem socialization in rails
+    $ git clone https://github.com/rinoldsimon/SocialRails.git
+    $ cd SocialRails
+    $ bundle
+    $ rake db:migrate
+    $ rails s
