@@ -13,7 +13,7 @@ class GchatsController < ApplicationController
       if @gchat.save
         flash.now[:success] = 'Your message was successfully posted!'
       else
-        flash.now[:error] = 'Your message cannot be saved.'
+        flash.now[:error] = 'Your message cannot be posted.'
       end
       format.html {redirect_to root_url}
       format.js
