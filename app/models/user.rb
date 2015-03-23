@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
     where("name like ?", "%#{query}%") 
   end
 
-  has_many :messages
+  has_many :messages, dependent: :destroy
 
   after_create :send_signup_email 
 
