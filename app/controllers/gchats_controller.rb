@@ -1,6 +1,10 @@
 class GchatsController < ApplicationController
 	before_action :authenticate_user!
 
+  def index
+    @gchats = Gchat.order('created_at DESC')
+  end
+
   def new
     @gchat = Gchat.new
     @gchats = Gchat.order('created_at DESC')
