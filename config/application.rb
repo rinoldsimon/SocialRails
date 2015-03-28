@@ -20,7 +20,7 @@ module PaS
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
       config.time_zone = 'Chennai'
-      config.active_record.default_timezone = :local
+      config.active_record.default_timezone = 'Chennai'
   end
 
 end
