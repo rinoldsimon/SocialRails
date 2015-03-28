@@ -1,2 +1,2 @@
-$('#gchats').find('.media-list').html('<%= j render @gchats %>');
-window.Poll();
+$('#gchats').find('.media-list').prepend('<%= j render @gchats %>');
+Poller.poll();
