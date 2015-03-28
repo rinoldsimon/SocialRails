@@ -18,4 +18,5 @@
 //= require turbolinks
 //= require select2
 //= require bootstrap
+//= require polling
 //= require_tree .

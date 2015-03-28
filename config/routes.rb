@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :friendships
   resources :messages
 
-  resources :gchats, only: [:new, :create]
+  resources :gchats, only: [:new, :create, :index]
   get 'gchats/new'
   
 end
