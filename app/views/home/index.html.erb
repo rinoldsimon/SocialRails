@@ -1,11 +1,4 @@
 <%= render "posts/form" %>
+<%= render "posts/index" %>
 
-<div id="my-posts">
- <%= render "posts/index" %>
-</div>
-
-<div id="infinite-scrolling">
-  <%= will_paginate @posts %>
-</div>
-
-<%# will_paginate @posts %>
+<%= will_paginate @posts %>
