@@ -19,4 +19,5 @@
 //= require select2
 //= require bootstrap
 //= require polling
+//= require pagination
 //= require_tree .
