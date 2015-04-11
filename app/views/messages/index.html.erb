@@ -2,5 +2,5 @@
 <% for user in @users %>
 <% if current_user.id != user.id %>
     <%= user.name %><%= link_to "New Message", new_message_path(:recv_uid=> user.id) %>
-<% end %>
+<% end %><br>
 <% end %>
