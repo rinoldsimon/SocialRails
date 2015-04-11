@@ -3,7 +3,8 @@
 Devise.setup do |config|
 
   #declare the provider
-  
+  config.omniauth :facebook, "423668741143196", "613384c9665ee932652ac0df99efae0c", :secure_image_url => true
+  config.omniauth :github, "41f7162f4bdfdb7c5880", "b764ec157afc9cae43e230a5a98af6779da44ce8", :scope => 'user,public_repo'
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
