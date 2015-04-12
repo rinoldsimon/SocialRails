@@ -1,7 +1,18 @@
 <% if current_user.id == @user.id %>
 <h2> My Profile </h2>
 <% else %>
-<h2> <%= @user.name.pluralize.humanize %> Profile </h2>
+<h2> 
+<%= @user.name.pluralize.humanize %> Profile 
+
+<% if current_user.id != @user.id %>
+  <% if current_user.friends.include? @user %>
+    <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete %>
+  <% else %>
+    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post %>
+  <% end %>
+<% end %>
+
+</h2>
 <% end %>
 
 <p>Username: <%=h @user.name %></p>
@@ -44,14 +55,6 @@
 
 <% if current_user.id != @user.id %>
 <h2> <%= @user.name %>'s Activities </h2>
-
-<% if current_user.id != @user.id %>
-  <% if current_user.friends.include? @user %>
-    <%= link_to "Remove Friend", current_user.friendships.find_by_friend_id(@user.id), method: :delete %>
-  <% else %>
-    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post %>
-  <% end %>
-<% end %>
 
 <h2>Posts</h2>
 
