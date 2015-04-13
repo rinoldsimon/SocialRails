@@ -1,36 +1,70 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
-
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name, autofocus: true %></div>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
+<div class="container">
+    
+  <div class="omb_login">
+  <h3 class="omb_authTitle">Edit <%= resource_name.to_s.humanize %></h3>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+    <div class="row omb_row-sm-offset-3">
+      <div class="col-xs-12 col-sm-6">  
+      
+          <form class="omb_loginForm" action="" autocomplete="off" method="POST">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" autofocus="true" value ="<%= @user.name %>" class="form-control" name="user[name]" placeholder="Name">
+          </div>
+          <span class="help-block"></span>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" value ="<%= @user.email %>" class="form-control" name="user[email]" placeholder="Email address">
+          </div>
+          <span class="help-block"></span>
+          
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+          <% end %> 
 
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input  autocomplete="off" type="password" value ="<%= @user.password %>" class="form-control" name="user[password]" placeholder="Password (leave blank if you don't want to change it)">
+          </div>
+          <span class="help-block"></span>
+                    
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="password" value ="<%= @user.password_confirmation %>" class="form-control" name="user[password_confirmation]" placeholder="Confirm Password">
+          </div>
+          <span class="help-block"></span>
+            
+          
+          <h3>Profile Picture</h3>
+          <%= f.file_field :avatar %>
+          <h3><%= f.check_box :remove_avatar %>
+          Remove Profile picture</h3>
+                
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="password" value ="<%= @user.current_password %>" class="form-control" name="user[current_password]" placeholder="Current Password (we need your current password to confirm your changes)">
+          </div>
+                    <span class="help-block"><font color="red"> <%= devise_error_messages! %> </font></span>
 
-  <div><%= f.file_field :avatar %></div>
-       <%= f.check_box :remove_avatar %>
-       Remove Profile picture
+          <div class="col-xs-4 col-sm-6">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+          </div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %></div>
+          <div class="col-xs-4 col-sm-6">
+          <%= link_to 'Cancel my account', registration_path(resource_name), :class => 'btn btn-lg btn-danger btn-block', data: { confirm: "Are you sure?" }, method: :delete %>
+          </div>
 
-  <div><%= f.submit "Update" %></div>
+        </form>
+
+      </div>
+      </div>      
+  </div>
+
+</div>
+
 <% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
