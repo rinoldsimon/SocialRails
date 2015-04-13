@@ -1,12 +1,39 @@
-<h2>Forgot your password?</h2>
-
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= devise_error_messages! %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-  <div><%= f.submit "Send me reset password instructions" %></div>
+<div class="container">
+    
+    <div class="omb_login">
+    	<h3 class="omb_authTitle">
+        <%- if controller_name != 'sessions' %>
+          <%= link_to "Log in", new_session_path(resource_name) %>
+        <% end -%>
+    	 or 
+    	<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+          <%= link_to "Sign up", new_registration_path(resource_name) %><br />
+        <% end -%>
+        </h3>
+        
+		<%= render "devise/shared/provider" %>
+
+		<div class="row omb_row-sm-offset-3">
+			<div class="col-xs-12 col-sm-6">	
+			<h3> Forgot your password? </h3>
+			    <form class="omb_loginForm" action="" autocomplete="off" method="POST">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" autofocus="true" value ="<%= @user.email %>" class="form-control" name="user[email]" placeholder="Email address">
+					</div>
+					
+                    <span class="help-block"><font color="red"> <%= devise_error_messages! %></font></span>
+
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Send me reset password instructions</button>
+				</form>
+			</div>
+    	</div>	    	
+	</div>
+
+</div>
+
 <% end %>
-
-<%= render "devise/shared/links" %>
