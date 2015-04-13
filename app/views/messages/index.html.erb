@@ -1,6 +1,11 @@
-<br>
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
 <% for user in @users %>
-<% if current_user.id != user.id %>
-    <%= user.name %><%= link_to "New Message", new_message_path(:recv_uid=> user.id) %>
-<% end %><br>
+  <% if current_user.id != user.id %>
+    <%= user.name.humanize %> <%= link_to "New Message", new_message_path(:recv_uid=> user.id) %>
+  <% end %><br>
 <% end %>
+
+</div>
+</div>

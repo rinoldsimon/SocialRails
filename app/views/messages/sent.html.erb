@@ -1,4 +1,6 @@
-<br>
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
 <% @sentmessage.each do |m| %>
    <b>Message:</b><%= m.message %>
    <b>sent to </b>
@@ -10,3 +12,6 @@
 <em><%= time_ago_in_words(m.created_at) %> ago </em> 
 <%= m.created_at.to_time.to_formatted_s(:db) %> <br>
 <% end %>
+
+</div>
+</div>

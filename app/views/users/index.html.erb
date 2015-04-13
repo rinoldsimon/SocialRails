@@ -1,10 +1,17 @@
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
+<form class="navbar-form navbar-left" method="get" id="search-form">
+        <div class="form-group">
+          <input type="text" name="<%= :search %>" class="form-control" placeholder="Search Users">
+        </div>
+        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+</form>
+<br>
+<br>
+<br>
 <%= notice %>
 <h3> "User List" </h3>
-
-<form method="get", id="search-form">
-  <%= text_field_tag :search, params[:search], placeholder: "Search Users" %>
-  <%= submit_tag "Search", :name => nil %>
-</form>
 
 <% for user in @users %>
 
@@ -21,3 +28,6 @@
 <% end %>
 
 <% end %>
+
+</div>
+</div>

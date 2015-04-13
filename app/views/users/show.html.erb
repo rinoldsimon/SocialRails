@@ -1,3 +1,6 @@
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
 <% if current_user.id == @user.id %>
 <h2> My Profile </h2>
 <% else %>
@@ -61,3 +64,6 @@
 <%= render @user.posts %>
 <%= render @user.comments %>
 <% end %>
+
+</div>
+</div>
