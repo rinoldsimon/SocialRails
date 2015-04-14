@@ -26,6 +26,7 @@
                 <div class="text">
                     <label class="text-muted"><%= link_to user.name, user %></label>
                 </div>
+                <span class=" badge badge-info">Friends: <%= user.friends.count %></span>
                 <div class="options">
       <%if current_user.friends.include? user %>
       <%= link_to '<i class="glyphicon glyphicon-plus"></i> Remove Friend'.html_safe, friendship_path(current_user.friendships.find_by_friend_id(user)), :class => 'btn btn-primary btn-lg', :method => :delete %>

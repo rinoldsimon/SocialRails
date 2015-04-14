@@ -38,9 +38,6 @@
   <% for friendship in @user.friendships %>
     <li>
       <%=h link_to friendship.friend.name, friendship.friend %>
-      <% if current_user.id != friendship.friend.id %>
-      (<%= link_to "Remove Friendship", friendship, :method => :delete %>)
-      <% end %>
     </li>
   <% end %>
 </ul>
