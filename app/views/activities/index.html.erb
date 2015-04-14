@@ -1,12 +1,22 @@
 <div class="container-fluid main-container">
 <div class="col-md-10 content">
 
-<h1>Friend's Activities</h1>
+<h2>Friend's Activities</h2>
 
 <% @activities.each do |activity| %>
-    <%= link_to activity.owner.name, activity.owner if activity.owner %>
-    <%= render_activity activity %>
-<% end %>
+            <div class="qa-message-list" id="wallmessages">
+    				<div class="message-item" id="m16">
+						<div class="message-inner">
+							<div class="qa-message-content">
+								
+                                <%= link_to activity.owner.name, activity.owner if activity.owner %>
+                                <%= render_activity activity %>
+                              
+							</div>
+					    </div>
+					</div>				
+			</div>
+  <% end %>
 
 </div>
 </div>

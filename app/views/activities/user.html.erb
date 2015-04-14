@@ -1,12 +1,25 @@
 <div class="container-fluid main-container">
 <div class="col-md-10 content">
 
-<h2> My Activities </h2>
+<h2> Timeline </h2>
 
 <h2>Posts</h2>
+<div class="row">
+  <div class="col-md-10">
+    <div class="timeline-centered"> 
 <%= render @user.posts %>
+     </div>
+  </div>
+</div>
+
 <h2>Comments</h2>
+<div class="row">
+  <div class="col-md-10">
+    <div class="timeline-centered"> 
 <%= render @user.comments.order("id DESC") %>
+    </div>
+  </div>
+</div>
 
 </div>
 </div>
