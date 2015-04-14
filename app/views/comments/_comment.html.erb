@@ -1,16 +1,27 @@
 <%= div_for comment do %>
-  <h2>Commented on a <%= link_to_unless_current comment.post.class, comment.post %></h2>
-  <%= simple_format comment.body %>
-  <%= time_ago_in_words(comment.created_at) %> ago
-  <em>added by <%= link_to comment.user.name, comment.user %></em>
-  <%= pluralize(comment.likers(User).count, 'like')%>
 
-  <% if comment.likers(User).count > 0 %>
-  <% users= comment.likers(User) %>                 
-    (<% for u in users %>
-     | <%= link_to u.name, u %>
-     <% end %>|)
-  <% end %>
+<article class="timeline-entry">
+    
+    <div class="timeline-entry-inner">
+      <time class="timeline-time" ><span><%= time_ago_in_words(comment.created_at) %> ago</span></time>
+      
+      <div class="timeline-icon bg-success">
+        <i class="entypo-suitcase"></i>
+      </div>
+      
+      <div class="timeline-label">
+        <h2>Commented on a <%= link_to_unless_current comment.post.class, comment.post %><%= simple_format comment.body %></h2>
+        <p>added by <%= link_to comment.user.name, comment.user %> <strong>
+        <%= pluralize(comment.likers(User).count, 'like')%></strong> 
+        <% if comment.likers(User).count > 0 %>
+        <% users= comment.likers(User) %>                 
+          (<% for u in users %>
+           | <%= link_to u.name, u %>
+           <% end %>|)
+        <% end %></p>
+      </div>
+    </div>
+    
+</article> 
 
 <% end %>
-<hr>

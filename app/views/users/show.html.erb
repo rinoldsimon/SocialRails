@@ -1,3 +1,6 @@
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
 <% if current_user.id == @user.id %>
 <h2> My Profile </h2>
 <% else %>
@@ -16,12 +19,13 @@
 <% end %>
 
 <p>Username: <%=h @user.name %></p>
+<p>Email: <%= @user.email %></p>
 
 <p>Profile picture:</p>
 <% if @user.avatar? %>
-<%= link_to image_tag(@user.avatar_url, :width => 100), @user.avatar_url %>
+<%= link_to image_tag(@user.avatar_url, :width => 100, :height => 100), @user.avatar_url %>
 <% else %>
-<%= link_to image_tag(@user.gravatar_url), @user.gravatar_url %>
+<%= link_to image_tag(@user.gravatar_url, :width => 100, :height => 100), @user.gravatar_url %>
 <% end %>
 
 <% if current_user.id != @user.id %>
@@ -34,9 +38,6 @@
   <% for friendship in @user.friendships %>
     <li>
       <%=h link_to friendship.friend.name, friendship.friend %>
-      <% if current_user.id != friendship.friend.id %>
-      (<%= link_to "Remove Friendship", friendship, :method => :delete %>)
-      <% end %>
     </li>
   <% end %>
 </ul>
@@ -61,3 +62,6 @@
 <%= render @user.posts %>
 <%= render @user.comments %>
 <% end %>
+
+</div>
+</div>

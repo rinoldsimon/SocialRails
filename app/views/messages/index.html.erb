@@ -1,6 +1,32 @@
-<br>
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
+
+<div class="row col-md-6 custyle">
+    <table class="table table-striped custab">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th class="text-center">Action</th>
+        </tr>
+    </thead>
+
 <% for user in @users %>
-<% if current_user.id != user.id %>
-    <%= user.name %><%= link_to "New Message", new_message_path(:recv_uid=> user.id) %>
-<% end %><br>
+  <% if current_user.id != user.id %>
+
+            <tr>
+                <td><%= user.name.humanize %></td>
+                <td><%= user.email %></td>
+                <td class="text-center">
+                <%= link_to '<span class="glyphicon glyphicon-edit"></span> New Message'.html_safe,new_message_path(:recv_uid=> user.id, :class => 'btn btn-info btn-s') %>
+                </td>
+            </tr>
+ 
+  <% end %>
 <% end %>
+
+</table>
+    </div>
+
+</div>
+</div>

@@ -1,12 +1,54 @@
-<br>
-<% @sentmessage.each do |m| %>
-   <b>Message:</b><%= m.message %>
-   <b>sent to </b>
+<div class="container-fluid main-container">
+<div class="col-md-10 content">
 
-   <% @name = User.where(:id => m.receiver_user_id) %>
-   <% @name.each do |n| %>
-     <%= link_to n.name, n %>
-   <% end %>
-<em><%= time_ago_in_words(m.created_at) %> ago </em> 
-<%= m.created_at.to_time.to_formatted_s(:db) %> <br>
+<h2 class="page-header">Sent Messages</h2>
+
+<% @sentmessage.each do |m| %>
+
+  <div class="row">
+    <div class="col-md-8">
+        <section class="comment-list">
+          <!-- First Comment -->
+          <article class="row">
+            
+            <div class="col-md-9 col-sm-10">
+              <div class="panel panel-default arrow right">
+                <div class="panel-body">
+                  <header class="text-right">
+                    <time class="comment-date"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(m.created_at) %> ago | <%= m.created_at.to_time.to_formatted_s(:db) %> </time>
+                  </header>
+                  <div class="comment-post">
+                    <p class="text-right">
+                      <%= m.message %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-2 hidden-xs">
+              <figure class="thumbnail">
+                  <% @name = User.find_by_id(m.receiver_user_id) %> 
+                  <% if @name == nil || @name == "" %>
+                  <% elsif @name.avatar? %>
+                  <%= image_tag(@name.avatar_url, :width => 50, :height => 50) %>
+                  <% else %>
+                  <%= image_tag(@name.gravatar_url, :width => 50, :height => 50) %>
+                  <% end %>
+                <figcaption class="text-center">       
+                  <% if @name == nil || @name == "" %>   
+                    <i>(user left)</i>
+                  <% else %>
+                       <%= link_to @name.name, @name %>
+                  <% end %>
+                </figcaption>
+              </figure>
+            </div>
+          </article>
+        </section>
+    </div>
+   </div>
+
 <% end %>
+
+</div>
+</div>

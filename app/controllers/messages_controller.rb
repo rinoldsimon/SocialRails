@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
   end
 
   def sent
-    @sentmessage = Message.where.not(:receiver_user_id => current_user.id)
+    @sentmessage = Message.where(:user_id => current_user.id)
   end
 
   def create
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to root_url, notice: 'message was sent successfully.' }
+        format.html { redirect_to root_url, notice: 'Message was sent successfully.' }
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }

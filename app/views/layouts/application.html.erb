@@ -8,31 +8,7 @@
 </head>
 <body>
 
-<% if user_signed_in? %>
- 		<% if current_user.avatar? %>
-		  <%= image_tag(current_user.avatar_url, :width => 100) %>
-		<% else %>
-		  <%= image_tag current_user.gravatar_url %>
-		<% end %>
-          <%= current_user.name %>
-          <%= link_to 'Edit account', edit_user_registration_path %>
-          
-          <%= link_to "Sign-out", destroy_user_session_path, method: :delete %> 
-
-<%= link_to "Home", root_url %>
-<%= link_to "News feed", '/activities/index' %>
-<%= link_to "My activities", '/activities/user' %>
-<%= link_to "Users", '/users/index' %>
-<%= link_to "My profile", current_user %>
-<%= current_user.last_sign_in_at.to_date %>
-<%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %>
-<%= current_user.sign_in_count %>
-<%= link_to "New Message", '/messages/index' %>
-<%= link_to "My Messages", '/messages/show' %>
-<%= link_to "Sent Messages", '/messages/sent' %>
-<%= link_to "Group Chat", '/gchats/new' %>
-
-<% end %>
+<%= render "layouts/nav" %>
 
 <%= yield %>
 
