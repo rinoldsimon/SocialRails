@@ -94,14 +94,14 @@
       <div class="side-menu-container">
         <ul class="nav navbar-nav">
           <li class="active">
-            <% if current_user.avatar? %>
-                    <%= image_tag(current_user.avatar_url, :width => 100) %>            
+                <% if current_user.avatar? %>
+                    <%= image_tag(current_user.avatar_url, :width => 100, :height => 100) %>   
                     <%= current_user.name %>
                   <% else %>                 
-                    <%= image_tag current_user.gravatar_url %>
+                    <%= image_tag(current_user.gravatar_url, :width => 100, :height => 100) %>
                     <%= current_user.name %>           
-                  <% end %>
-                </li>
+                <% end %>
+          </li>
           <!-- Dropdown-->
           <li class="panel panel-default" id="dropdown">
             <a data-toggle="collapse" href="#dropdown-lvl1">
