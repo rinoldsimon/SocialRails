@@ -16,6 +16,14 @@
       
       <%= link_to '<div class="navbar-brand">Home</div>'.html_safe, root_url %>
       </a>
+      <div class="navbar-brand-centered">
+        <% if notice %>
+          <div class="alert alert-success alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <strong><%= notice %></strong>
+      </div>
+<% end %>
+      </div>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -104,9 +112,9 @@
             <div id="dropdown-lvl1" class="panel-collapse collapse">
               <div class="panel-body">
                 <ul class="nav navbar-nav">
-                  <li><a>Last signin date: <%= current_user.last_sign_in_at.to_date %></a></li>
-                  <li><a>Last signin time: <%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %></a></li>
-                  <li><a>Total signin count: <%= current_user.sign_in_count %></a></li>
+                  <li><a><b>Last signin date:</b> <%= current_user.last_sign_in_at.to_date %></a></li>
+                  <li><a><b>Last signin time:</b> <%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %></a></li>
+                  <li><a><b>Total signin count:</b> <%= current_user.sign_in_count %></a></li>
                 </ul>
               </div>
             </div>
