@@ -15,8 +15,7 @@
         <%= pluralize(comment.likers(User).count, 'like')%></strong> 
         <% if comment.likers(User).count > 0 %>
         <% users= comment.likers(User) %>                 
-          (<% for u in users %>
-           | <%= link_to u.name, u %>
+          (<% for u in users %>| <%= link_to u.name, u %>
            <% end %>|)
         <% end %></p>
       </div>
