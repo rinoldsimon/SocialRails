@@ -1,4 +1,5 @@
 <div class="container-fluid main-container">
+<%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
 <%= form_for :message, url: messages_path do |f| %>
@@ -24,4 +25,5 @@
 <% end %>
 
 </div>
+<%= render "layouts/footer" %>
 </div>
