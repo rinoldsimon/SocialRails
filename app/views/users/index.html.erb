@@ -1,6 +1,6 @@
 <div class="container-fluid main-container">
+<%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
-
 <form class="navbar-form navbar-left" method="get" id="search-form">
         <div class="form-group">
           <input type="text" name="<%= :search %>" class="form-control" placeholder="Search Users">
@@ -34,12 +34,17 @@
       <%= link_to '<i class="glyphicon glyphicon-plus"></i> Add Friend'.html_safe, friendships_path(:friend_id => user), :class => 'btn btn-primary btn-lg', :method => :post %>
       <% end %>
                 </div>
-            </div>
+          </div>
         </div>
 
 <% end %>
-
 <% end %>
 
 </div>
+      <footer class="pull-left footer">
+        <p class="col-md-12">
+          <hr class="divider">
+          <a href="http://rinoldsimon.github.io/">Rinold Simon</a>
+        </p>
+      </footer>
 </div>
