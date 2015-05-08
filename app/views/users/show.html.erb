@@ -3,22 +3,48 @@
 <div class="col-md-10 content">
 
 <% if current_user.id == @user.id %>
-<h2> My Profile </h2>
+<h2 class="page-header">My Profile</h2>
 <% else %>
-<h2> 
-<%= @user.name.pluralize.humanize %> Profile 
-
-<% if current_user.id != @user.id %>
-  <% if current_user.friends.include? @user %>
-    <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete %>
-  <% else %>
-    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post %>
-  <% end %>
+<h2 class="page-header"><%= @user.name.pluralize.humanize %> Profile </h2>
 <% end %>
 
-</h2>
-<% end %>
+    <div class="row">
+    <div class="col-md-12">
 
+      <div class="tabbable-panel">
+        <div class="tabbable-line">
+          <ul class="nav nav-tabs ">
+            <li class="active">
+              <a href="#tab_default_1" data-toggle="tab">
+              Personal </a>
+            </li>
+            <% if current_user.id != @user.id %>
+              <li>
+                <a href="#tab_default_2" data-toggle="tab">
+                <%= @user.name %>'s Activities
+                 </a>
+              </li>
+            <% end %>
+            <li>
+              <a href="#tab_default_3" data-toggle="tab">
+              <% if current_user.id != @user.id %>
+              Friends <%= @user.name %> follow
+              <% else %> 
+              Friends you follow
+              <% end %> </a>
+            </li>
+            <li>
+              <a href="#tab_default_4" data-toggle="tab">
+              <% if current_user.id != @user.id %>
+              Friends following <%= @user.name %>
+              <% else %>
+              Friends following you
+              <% end %> </a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab_default_1">
+              <p>
 <p>Username: <%=h @user.name %></p>
 <p>Email: <%= @user.email %></p>
 
@@ -30,39 +56,67 @@
 <% end %>
 
 <% if current_user.id != @user.id %>
-<h2>Friends <%= @user.name %> follow</h2>
-<% else %> 
-<h2>Friends you follow</h2>
-<% end %>
-
-<ul>
-  <% for friendship in @user.friendships %>
-    <li>
-      <%=h link_to friendship.friend.name, friendship.friend %>
-    </li>
+  <% if current_user.friends.include? @user %>
+    <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete, :class =>'btn btn-danger' %>
+  <% else %>
+    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post, :class =>'btn btn-success' %>
   <% end %>
-</ul>
-
-<% if current_user.id != @user.id %>
-<h2>Friends following <%= @user.name %> </h2>
 <% else %>
-<h2>Friends following you </h2>
+  <%= link_to 'Edit account', edit_user_registration_path, :class =>'btn btn-success' %>
 <% end %>
+              </p>
+            </div>
+            
+            <div class="tab-pane" id="tab_default_2">
+              <p>
+                <% if current_user.id != @user.id %>
+                  <h2>Posts</h2>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="timeline-centered"> 
+                  <%= render @user.posts %>
+                       </div>
+                    </div>
+                  </div>
+                  
+                  <h2>Comments</h2>
+                  <div class="row">
+                    <div class="col-md-10">
+                      <div class="timeline-centered"> 
+                  <%= render @user.comments.order("id DESC") %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </p>
+            </div>
 
-<ul>
-  <% for user in @user.inverse_friends %>
-    <li><%=h link_to user.name, user %></li>
-  <% end %>
-</ul>
+            <div class="tab-pane" id="tab_default_3">
+              <p>
+               <ul>
+                 <% for friendship in @user.friendships %>
+                   <li>
+                     <%=h link_to friendship.friend.name, friendship.friend %>
+                   </li>
+                  <% end %>
+               </ul>
+              </p>
+            </div>
 
-<% if current_user.id != @user.id %>
-<h2> <%= @user.name %>'s Activities </h2>
-
-<h2>Posts</h2>
-
-<%= render @user.posts %>
-<%= render @user.comments %>
-<% end %>
+            <div class="tab-pane" id="tab_default_4">
+              <p>
+                <ul>
+                  <% for user in @user.inverse_friends %>
+                    <li><%=h link_to user.name, user %></li>
+                  <% end %>
+                </ul>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 <%= render "layouts/footer" %>
