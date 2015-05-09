@@ -20,41 +20,36 @@
             </li>
             <% if current_user.id != @user.id %>
               <li>
-                <a href="#tab_default_2" data-toggle="tab">
-                <%= @user.name %>'s Activities
-                 </a>
+                <a href="#tab_default_2" data-toggle="tab">Activities </a>
               </li>
             <% end %>
             <li>
               <a href="#tab_default_3" data-toggle="tab">
-              <% if current_user.id != @user.id %>
-              Friends <%= @user.name %> follow
-              <% else %> 
-              Friends you follow
-              <% end %> </a>
+              Following </a>
             </li>
             <li>
               <a href="#tab_default_4" data-toggle="tab">
-              <% if current_user.id != @user.id %>
-              Friends following <%= @user.name %>
-              <% else %>
-              Friends following you
-              <% end %> </a>
+              Followers </a>
             </li>
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tab_default_1">
               <p>
-<p>Username: <%=h @user.name %></p>
-<p>Email: <%= @user.email %></p>
-
-<p>Profile picture:</p>
-<% if @user.avatar? %>
-<%= link_to image_tag(@user.avatar_url, :width => 100, :height => 100), @user.avatar_url %>
-<% else %>
-<%= link_to image_tag(@user.gravatar_url, :width => 100, :height => 100), @user.gravatar_url %>
-<% end %>
-
+<div class="container-fluid well span6">
+  <div class="row-fluid">
+        <div class="span2">
+        <% if @user.avatar? %>
+        <img src="<%= @user.avatar_url %>" class="img-circle">
+        <% else %>
+        <img src="<%= @user.gravatar_url %>" class="img-circle">
+        <% end %>
+        </div>
+        
+        <div class="span8">
+            <h3><%=h @user.name %></h3>
+            <h6>Email: <%= @user.email %></h6>
+        </div>
+        
 <% if current_user.id != @user.id %>
   <% if current_user.friends.include? @user %>
     <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete, :class =>'btn btn-danger' %>
@@ -64,6 +59,8 @@
 <% else %>
   <%= link_to 'Edit account', edit_user_registration_path, :class =>'btn btn-success' %>
 <% end %>
+</div>
+</div>
               </p>
             </div>
             

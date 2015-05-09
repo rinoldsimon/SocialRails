@@ -2,14 +2,12 @@
 <%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
-<%= form_for :message, url: messages_path do |f| %>
-  
+<h2 class="page-header">New Message</h2>
 
-<div class="container">
-    <div>        
+<%= form_for :message, url: messages_path do |f| %>
+        
         <br style="clear:both">
             <div class="form-group col-md-4 ">                                
-                <label id="messageLabel" for="message">New Message </label>
                 <textarea required="true" name="message[message]" value="<%= @message.message %>"class="form-control input-sm " type="textarea" id="message" placeholder="Message" maxlength="140" rows="7"></textarea>
                     <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
             </div>
@@ -17,7 +15,6 @@
         <div class="form-group col-md-2">
         <button class="form-control input-sm btn btn-success disabled" id="btnSubmit" name="btnSubmit" type="submit" style="height:35px"> Send</button>    
     </div>
-</div>
 
     <%= f.hidden_field :receiver_user_id, :value => @recv_uid %>
     <%= f.hidden_field :user_id %>

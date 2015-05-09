@@ -35,7 +35,22 @@
 <% if @post.avatar.present? %>
 <p>
   <strong>Attachment:</strong><br />
-  <%= link_to image_tag(@post.avatar_url, :width => 200), @post.avatar_url %>
+  <% if @post.avatar.present? %>
+
+              <% file = @post.avatar.url %>
+              <% extension = @post.avatar.file.extension.downcase %>
+
+              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
+                <%= link_to image_tag(@post.avatar_url, :width => 200), @post.avatar_url %>
+              <% elsif %w{mp4}.include?(extension) %>
+                <%= link_to "play mp4", @post.avatar_url %>
+              <% elsif %w{mp3}.include?(extension) %>
+                <%= link_to "play mp3", @post.avatar_url %>
+              <% else %>
+                <%= link_to "download attatchment", @post.avatar_url %> <%= extension %>
+              <% end %>
+              
+  <% end %>
 </p>
 <% end %>
 
