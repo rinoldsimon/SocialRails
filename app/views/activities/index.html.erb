@@ -1,18 +1,17 @@
 <div class="container-fluid main-container">
+<%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
-<h2>Friend's Activities</h2>
+<h2 class="page-header">Friend's Activities</h2>
 
 <% @activities.each do |activity| %>
             <div class="qa-message-list" id="wallmessages">
     				<div class="message-item" id="m16">
 						<div class="message-inner">
-							<div class="qa-message-content">
-								
+							<div class="qa-message-content">	
                                 <%= link_to activity.owner.name, activity.owner if activity.owner %>
                                 <%= render_activity activity %>
-                              
-							</div>
+                            </div>
 					    </div>
 					</div>				
 			</div>

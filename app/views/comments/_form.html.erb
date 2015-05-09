@@ -11,13 +11,82 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.text_area :body, required: true %>
-  </div>
+<div class="row">
+        <div class="[ col-xs-6 col-sm-offset-0 col-sm-8 ]">
+            <div class="[ panel panel-default ] panel-google-plus">
+            <div class="panel-heading">
+                    <% if @post.user.avatar? %>
+                    <img class="[ img-circle pull-left ]" src="<%= @post.user.avatar_url %>" />
+                    <% else %>
+                    <img class="[ img-circle pull-left ]" src="<%= @post.user.gravatar_url %>" />
+                    <% end %>
+                    <h3><%= link_to @post.user.name, @post.user %></h3>
+                    <h5>
+                    <% if @post.tags? %>
+                      <strong>Tags:</strong>
+                      <% @users = User.all %> 
+                      <% tag=@post.tags.split(",") %>
+                          <% tag.each do |t| %>
+                          <% for user in @users %>
+                            <% if t == user.name %>
+                              <%= link_to t, user %>
+                            <% end %>
+                          <% end %>
+                        <% end %>
+                    <% end %>
+                    <span class="pull-right"><%= time_ago_in_words(@post.created_at) %> ago</span> </h5>
+                </div>
+                <div class="panel-body">
+                    <p><% if current_user.id == @post.user_id %>
+                      <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the content to edit)
+                      <% else %>
+                      <%= @post.content %>
+                      <% end %><br>
+
+            <% if @post.avatar.present? %>
+              <% file = @post.avatar.url %>
+              <% extension = @post.avatar.file.extension.downcase %>
+
+              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
+                <%= link_to "view image", @post.avatar_url %>
+              <% elsif %w{mp4}.include?(extension) %>
+                <%= link_to "play mp4", @post.avatar_url %>
+              <% elsif %w{mp3}.include?(extension) %>
+                <%= link_to "play mp3", @post.avatar_url %>
+              <% else %>
+                <%= link_to "download attatchment", @post.avatar_url %> Format:<%= extension %>
+              <% end %>
+            <% end %>
+            </p>
+                </div>
+            <div class="panel-footer">
+                    <div class="<%= @post.class %>-<%= @post.id %>">
+                      <%= render 'shared/like_form', likeable: @post %>
+                    <div style="float:left;" class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
+                    </div>
+                    <% if current_user.id == @post.user_id %>
+                    <%= link_to '<button style="float:left;" type="button" class="[ btn btn-default ]"><span class="[ glyphicon glyphicon-trash ]"></span></button>'.html_safe, @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+                    <% end %>
+             <div class="input-placeholder">Add a comment...</div>
+            </div>
+            <div class="panel-google-plus-comment">
+                    <% if current_user.avatar_url %>
+                    <img height="42" width="42" class="img-circle" src="<%= current_user.avatar_url %>" alt="User Image" />
+                    <% else %>
+                    <img height="42" width="42" class="img-circle" src="<%= current_user.gravatar_url %>" alt="User Image" />
+                    <% end %>
+                    <div class="panel-google-plus-textarea">
+                        <textarea required="true" name="comment[body]" rows="4"></textarea>
+                        <button type="submit" class="[ btn btn-success disabled ]">Post comment</button>
+                        <button type="reset" class="[ btn btn-default ]">Cancel</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+            </div>
+        </div>
+</div>
 
   <%= f.hidden_field :post_id %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

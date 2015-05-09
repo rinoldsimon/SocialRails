@@ -11,13 +11,29 @@
       
       <div class="timeline-label">
         <h2>Added a <%= link_to_unless_current post.class, post %><%= simple_format post.content %>
-          <%= image_tag post.avatar, size: "100x100" if post.avatar.present?%></h2>
+
+        <% if post.avatar.present? %>
+
+              <% file = post.avatar.url %>
+              <% extension = post.avatar.file.extension.downcase %>
+
+              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
+                <%= link_to image_tag(post.avatar_url, :width => 100), post.avatar_url %>
+              <% elsif %w{mp4}.include?(extension) %>
+                <%= link_to "play mp4", post.avatar_url %>
+              <% elsif %w{mp3}.include?(extension) %>
+                <%= link_to "play mp3", post.avatar_url %>
+              <% else %>
+                <%= link_to "download attatchment", post.avatar_url %> <%= extension %>
+              <% end %>
+              
+        <% end %></h2>
+
         <p>added by <%= link_to post.user.name, post.user %> <strong><%= link_to pluralize(post.comments.count, 'comment'), post %>
         <%= pluralize(post.likers(User).count, 'like')%></strong> 
         <% if post.likers(User).count > 0 %>
           <% users= post.likers(User) %>                 
-          (<% for u in users %>
-            | <%= link_to u.name, u %>
+          (<% for u in users %>| <%= link_to u.name, u %>
            <% end %>|)
         <% end %></p>
       </div>

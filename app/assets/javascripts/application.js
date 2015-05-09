@@ -22,38 +22,60 @@
 //= require_tree .
 
 
-$(function () {
-  	$('.navbar-toggle-sidebar').click(function () {
-  		$('.navbar-nav').toggleClass('slide-in');
-  		$('.side-body').toggleClass('body-slide-in');
-  		$('#search').removeClass('in').addClass('collapse').slideUp(200);
-  	});
-
-  	$('#search-trigger').click(function () {
-  		$('.navbar-nav').removeClass('slide-in');
-  		$('.side-body').removeClass('body-slide-in');
-  		$('.search-input').focus();
-  	});
+$(function() {
+  $('.navbar-toggle-sidebar').click(function() {
+    $('.navbar-nav').toggleClass('slide-in');
+    $('.side-body').toggleClass('body-slide-in');
+    $('#search').removeClass('in').addClass('collapse').slideUp(200);
   });
 
-//new message
-$(document).ready(function(){ 
-    $('#characterLeft').text('140 characters left');
-    $('#message').keydown(function () {
-        var max = 140;
-        var len = $(this).val().length;
-        if (len >= max) {
-            $('#characterLeft').text('You have reached the limit');
-            $('#characterLeft').addClass('red');
-            $('#btnSubmit').addClass('disabled');            
-        } 
-        else {
-            var ch = max - len;
-            $('#characterLeft').text(ch + ' characters left');
-            $('#btnSubmit').removeClass('disabled');
-            $('#characterLeft').removeClass('red');            
-        }
-    });    
+  $('#search-trigger').click(function() {
+    $('.navbar-nav').removeClass('slide-in');
+    $('.side-body').removeClass('body-slide-in');
+    $('.search-input').focus();
+  });
 });
 
-//message index
+//new message
+$(document).ready(function() {
+  $('#characterLeft').text('140 characters left');
+  $('#message').keydown(function() {
+    var max = 140;
+    var len = $(this).val().length;
+    if (len >= max) {
+      $('#characterLeft').text('You have reached the limit');
+      $('#characterLeft').addClass('red');
+      $('#btnSubmit').addClass('disabled');
+    } else {
+      var ch = max - len;
+      $('#characterLeft').text(ch + ' characters left');
+      $('#btnSubmit').removeClass('disabled');
+      $('#characterLeft').removeClass('red');
+    }
+  });
+});
+
+//post,comment
+$(function () {
+   $('.panel-google-plus > .panel-footer > .input-placeholder, .panel-google-plus > .panel-google-plus-comment > .panel-google-plus-textarea > button[type="reset"]').on('click', function(event) {
+        var $panel = $(this).closest('.panel-google-plus');
+            $comment = $panel.find('.panel-google-plus-comment');
+            
+        $comment.find('.btn:first-child').addClass('disabled');
+        $comment.find('textarea').val('');
+        
+        $panel.toggleClass('panel-google-plus-show-comment');
+        
+        if ($panel.hasClass('panel-google-plus-show-comment')) {
+            $comment.find('textarea').focus();
+        }
+   });
+   $('.panel-google-plus-comment > .panel-google-plus-textarea > textarea').on('keyup', function(event) {
+        var $comment = $(this).closest('.panel-google-plus-comment');
+        
+        $comment.find('button[type="submit"]').addClass('disabled');
+        if ($(this).val().length >= 1) {
+            $comment.find('button[type="submit"]').removeClass('disabled');
+        }
+   });
+});
