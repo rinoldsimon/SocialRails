@@ -24,12 +24,16 @@
             <div id="dropdown-lvl1" class="panel-collapse collapse">
               <div class="panel-body">
                 <ul class="nav navbar-nav">
-                  <li><a><b>Last signin date:</b> <%= current_user.last_sign_in_at.to_date %></a></li>
-                  <li><a><b>Last signin time:</b> <%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %></a></li>
-                  <li><a><b>Total signin count:</b> <%= current_user.sign_in_count %></a></li>
+                  <li><a><b>Last Sign In date:</b> <%= current_user.last_sign_in_at.to_date %></a></li>
+                  <li><a><b>Last Sign In time:</b> <%= current_user.last_sign_in_at.to_time.strftime("%H:%M:%S") %></a></li>
+                  <li><a><b>Total Sign In count:</b> <%= current_user.sign_in_count %></a></li>
                 </ul>
               </div>
             </div>
+          </li>
+          <li>
+          <a href="/contacts/new">
+          <span class="glyphicon glyphicon-question-sign"></span>Help?</a>
           </li>
         </ul>
       </div><!-- /.navbar-collapse -->

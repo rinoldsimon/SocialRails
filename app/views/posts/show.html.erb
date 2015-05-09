@@ -2,91 +2,57 @@
 <%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
-<p>
-  <strong>Content:</strong>
-  <% if current_user.id == @post.user_id %>
-  <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the post to edit)
-  <% else %>
-  <%= @post.content %>
-  <% end %>
-</p>
-
-<p>
-<% if @post.tags? %>
-  <strong>Tags:</strong>
-  <% @users = User.all %>
-  
-  <% tag=@post.tags.split(",") %>
-    <% tag.each do |t| %>
-      <% for user in @users %>
-        <% if t == user.name %>
-          <%= link_to t, user %>
-        <% end %>
-      <% end %>
-    <% end %>
-<% end %>
-</p>
-
-<p>
-  <strong>Time:</strong>
-  <%= time_ago_in_words(@post.created_at) %> ago
-</p>
-
-<% if @post.avatar.present? %>
-<p>
-  <strong>Attachment:</strong><br />
-  <% if @post.avatar.present? %>
-
-              <% file = @post.avatar.url %>
-              <% extension = @post.avatar.file.extension.downcase %>
-
-              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
-                <%= link_to image_tag(@post.avatar_url, :width => 200), @post.avatar_url %>
-              <% elsif %w{mp4}.include?(extension) %>
-                <%= link_to "play mp4", @post.avatar_url %>
-              <% elsif %w{mp3}.include?(extension) %>
-                <%= link_to "play mp3", @post.avatar_url %>
-              <% else %>
-                <%= link_to "download attatchment", @post.avatar_url %> <%= extension %>
-              <% end %>
-              
-  <% end %>
-</p>
-<% end %>
-
-<div class="<%= @post.class %>-<%= @post.id %>">
-<%= render 'shared/like_form', likeable: @post %>
-<div class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
-</div>
-
-<h3>Comments:</h3>
-<%= link_to pluralize(@post.comments.count, 'comment'), @post %>
-<% @comments.each do |comment| %>
-    
-    <p><b><%= comment.user.name %></b>: 
-          <% if current_user.id == comment.user_id %>
-          <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %>(click on the content to edit)
-          <% else %>
-          <%= comment.body %>
-          <% end %>
-    <% if current_user.id == comment.user_id %>
-    <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-    <%# link_to 'Edit', edit_comment_path(comment) %>
-    <% end %>
-    <%= time_ago_in_words(comment.created_at) %> ago </p>
-    <div class="<%= comment.class %>-<%= comment.id %>">
-    <%= render 'shared/like_form', likeable: comment %>
-    <div class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
-    </div>
-    
-<% end %>
+<!-- post -->
 <%= render 'comments/form' %>
+
+<!-- comments -->
+            <div class="row">
+                <div class="[ col-xs-6 col-sm-offset-0 col-sm-8 ]">   
+                  <div class="page-header">
+                    <h3><small class="pull-right">
+                    <%=  pluralize(@post.comments.count, 'comment') %></small> Comments </h3>
+                  </div> 
+                   <div class="comments-list">
+                    <% @comments.each do |comment| %>
+                       <div class="media">
+                           <p class="pull-right"><small><%= time_ago_in_words(comment.created_at) %> ago</small>
+                           <br>
+                           <% if current_user.id == comment.user_id %>
+                                   <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
+                                   <%# link_to 'Edit', edit_comment_path(comment) %>
+                           <% end %>
+                           </p>
+                            <a class="media-left">
+                              <% if comment.user.avatar? %>
+                              <img class="img-circle" height="12" width="22" src="<%= comment.user.avatar %>">
+                              <% else %>
+                              <img class="img-circle" height="42" width="42" src="<%= comment.user.gravatar_url %>">
+                              <% end %>
+                            </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name"><%= link_to comment.user.name,comment.user %></h4>
+                              <% if current_user.id == comment.user_id %>
+                                <%= best_in_place comment, :body, :type => :input, :nil => "Click me to add content!" %>(click on the content to edit)
+                              <% else %>
+                                <%= comment.body %>
+                              <% end %>
+                                  <div class="<%= comment.class %>-<%= comment.id %>">
+                                  <%= render 'shared/like_form', likeable: comment %>
+                                  <div class="likes"><%=
+                                   pluralize(comment.likers(User).count, 'like') %></div>
+                                  </div>
+                            </div>
+                          </div>
+                    <% end %>
+                   </div>  
+                </div>
+            </div>
 
 <%# if current_user.id == @post.user_id %>
 <%# link_to 'Edit', edit_post_path(@post) %>
 <%# end %>
-<%= link_to 'Back', posts_path %>
+<%# link_to 'Back', posts_path %>
 
 </div>
-<%= render "layouts/footer" %>
 </div>
