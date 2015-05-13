@@ -1,123 +1,130 @@
-<h1>Listing posts and comments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>User id</th>
-      <th>User name</th>
-      <th>User pic</th>
-      <th>Content</th>
-      <th>Attachment</th>
-      <th>Tags</th>
-      <th>Time</th>
-      <!-- <th>Avatar</th> -->
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.user_id %></td>
-        <td><%= link_to post.user.name, post.user %></td>
-        <td><% if post.user.avatar? %>
-            <%= link_to image_tag(post.user.avatar_url, :width => 40), post.user.avatar_url %>
-            <% else %>
-            <%= link_to image_tag(post.user.gravatar_url, :width => 40), post.user.gravatar_url %>
-            <% end %>
-        </td>
-        <td><% if current_user.id == post.user_id %>
-            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the post to edit)
+<br><br><% @posts.each do |post| %>
+<div class="well">
+    <div class="row">
+      <div class="media">
+      <% if post.user.avatar? %>
+      <a class="pull-left" href="<%= post.user.avatar_url %>">
+        <img class="media-object" src="<%= post.user.avatar_url %>">
+      </a>
+      <% else %>
+      <a class="pull-left" href="<%= post.user.gravatar_url %>">
+        <img class="media-object" src="<%= post.user.gravatar_url %>">
+      </a>
+      <% end %>
+      <div class="media-body">
+          <p>
+          <h4 style="float:left;" class="media-heading"><%= link_to post.user.name, post.user %></h4>
+          
+            <div style="padding-left: 800px;" class="<%= post.class %>-<%= post.id %>">
+            <%= render 'shared/like_form', likeable: post %>
+            <div class="likes"><%= pluralize(post.likers(User).count, 'like')%></div>
+            </div>
+          </p>
+          <p>
+            <% if current_user.id == post.user_id %>
+            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the post to edit)</em></small>
             <% else %>
             <%= post.content %>
             <% end %>
-        </td>
-        <td><% if post.avatar.present? %>
+          </p>
+          <% if post.avatar.present? %>
 
               <% file = post.avatar.url %>
               <% extension = post.avatar.file.extension.downcase %>
 
-              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
-                <%= link_to image_tag(post.avatar_url, :width => 50), post.avatar_url %>
-              <% elsif %w{mp4}.include?(extension) %>
-                <%= link_to "play mp4", post.avatar_url %>
-              <% elsif %w{mp3}.include?(extension) %>
-                <%= link_to "play mp3", post.avatar_url %>
+              <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
+                <%= link_to image_tag(post.avatar_url, :width => 500), post.avatar_url %>
+              <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
+                <%= link_to "play video", post.avatar_url %>
+              <% elsif %w{mp3 wav}.include?(extension) %>
+                <%= link_to "play audio", post.avatar_url %>
               <% else %>
                 <%= link_to "download attatchment", post.avatar_url %> <%= extension %>
               <% end %>
-              
-            <% end %>
-        </td>
-        <td><% if post.tags? %>
-            <% for user in @users %>
-            <% if post.tags == user.name %>
-            <%=link_to post.tags, user %>
-            <% end %>
-            <% end %>
-            <% end %>
-        </td>
-        <!-- <td><%# post.created_at.to_time %></td> -->
-        <td><small><em><%= time_ago_in_words(post.created_at) %> ago </em>(<%= post.created_at.to_time.to_formatted_s(:db) %>)</small></td>
-        <!-- <td><%# image_tag post.avatar_url(:thumb) if post.avatar? %></td> -->
-        <td><div class="<%= post.class %>-<%= post.id %>">
-            <%= render 'shared/like_form', likeable: post %>
-            <div class="likes"><%= pluralize(post.likers(User).count, 'like')%></div>
-            </div>
-        </td>
-
-        <!-- <td><%# link_to 'Show', post %></td> -->
-
-        <% if current_user.id == post.user_id %>
-        <!-- <td><%# link_to 'Edit', edit_post_path(post) %></td> -->
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-
-      </tr>
-
-         <td><h3>Comments:</h3></td>
-         <td><%= link_to pluralize(post.comments.count, 'comment'), post %>
-         </td>
-
-         
-         <% post.comments.each do |comment| %>
-    
-         <td><b><%= link_to comment.user.name, comment.user %></b>
-              <% if comment.user.avatar? %>
-                <%= image_tag comment.user.avatar, :width => 30 %>
-              <% else %>
-                <%= image_tag (comment.user.gravatar_url), :width => 30 %>
+              <br><br>
+          <% end %>
+      <ul class="list-inline list-unstyled">
+        <li><span><i class="glyphicon glyphicon-calendar"></i> <small><em><%= time_ago_in_words(post.created_at) %> ago </em>(<%= post.created_at.to_time.to_formatted_s(:db) %>)</small> </span></li>
+            <li>|</li>
+            <span><i class="glyphicon glyphicon-trash"></i> 
+              <% if current_user.id == post.user_id %>
+              <!-- <%# link_to 'Edit', edit_post_path(post) %> -->
+              <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>
-          <% if current_user.id == comment.user_id %>
-          <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %>(click on the comment to edit)
-          <% else %>
-          <%= comment.body %>
-          <% end %>
-          </td>
+            </span>
+            <li>|</li>
+            <li>
+               <% if post.tags? %>
+               <span title="Tags" class="glyphicon glyphicon-tags"></span>
+                 <% for user in @users %>
+                 <% if post.tags == user.name %>
+                 <%=link_to post.tags, user %>
+                 <% end %>
+                 <% end %>
+                 <% end %>
+            </li>
+      </ul>
+       </div>
+       </div>
+  
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Comments
+                    <div class="pull-right label label-warning">
+                        <%= pluralize(post.comments.count, 'comment') %>
+                    </div>
+                </div>
+                <% if post.comments.count > 0 %>
+                <div class="panel-body1">
+                    <ul class="chat">
+                    <% post.comments.each do |comment| %>
+                        <li class="right clearfix"><span class="chat-img pull-right">
+                          <% if comment.user.avatar? %>
+                            <img height="42" width="42" src="<%= comment.user.avatar %>" alt="User Avatar" class="img-circle" />
+                          <% else %>
+                            <img height="42" width="42" src="<%= comment.user.gravatar_url %>" alt="User Avatar" class="img-circle" />
+                          <% end %>
+                        </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <small class=" text-muted"><span class="glyphicon glyphicon-time"></span><%= time_ago_in_words(comment.created_at) %> ago</small>
+                                    <div class="pull-right primary-font text-muted">By: 
+                                    <strong><%= link_to comment.user.name, comment.user %></strong>
+                                    </div>
+                                </div>
+                                <p>
+                                  <% if current_user.id == comment.user_id %>
+                                  <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the comment to edit)</em></small>
+                                  <% else %>
+                                  <%= comment.body %>
+                                  <% end %>
+                                </p>
+                            </div>
+                            <div class="<%= comment.class %>-<%= comment.id %>">
+                            <%= render 'shared/like_form', likeable: comment %>
+                            <div style="float:left;" class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
+                            </div>
+                            <% if current_user.id == comment.user_id %>
+                            <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?'}, :class=>'pull-right' %>
+                            <%# link_to 'Edit', edit_comment_path(comment) %>
+                            <% end %>
+                        </li>
+                    <% end %>
+                    </ul>
+                </div>
+                <% end %>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <%= link_to '<button style="width:920px;" class="btn btn-warning btn-sm" id="btn-chat">
+                                New Comment</button>'.html_safe, post %>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-          <td><%= time_ago_in_words(comment.created_at) %> ago</td>
-          <td><div class="<%= comment.class %>-<%= comment.id %>">
-              <%= render 'shared/like_form', likeable: comment %>
-              <div class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
-              </div>
-          </td>
-
-          <td>
-          <% if current_user.id == comment.user_id %>
-          <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' } %>
-          <%# link_to 'Edit', edit_comment_path(comment) %>
-          <% end %>
-          </td>
-
-          <% end %>
-          
-          <td><%= link_to "New comment", post %>
-          </td>
-
-
-    <% end %>
-  </tbody>
-</table>
-
-
-<%# link_to 'New Post', new_post_path %>
+</div>
+<% end %>

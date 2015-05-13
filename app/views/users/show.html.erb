@@ -2,11 +2,11 @@
 <%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
-<% if current_user.id == @user.id %>
-<h2 class="page-header">My Profile</h2>
-<% else %>
-<h2 class="page-header"><%= @user.name.pluralize.humanize %> Profile </h2>
-<% end %>
+    <% if current_user.id == @user.id %>
+    <h2 class="page-header">My Profile</h2>
+    <% else %>
+    <h2 class="page-header"><%= @user.name.pluralize.humanize %> Profile </h2>
+    <% end %>
 
     <div class="row">
     <div class="col-md-12">
@@ -35,8 +35,8 @@
           <div class="tab-content">
             <div class="tab-pane active" id="tab_default_1">
               <p>
-<div class="container-fluid well span6">
-  <div class="row-fluid">
+      <div class="container-fluid well span6">
+      <div class="row-fluid">
         <div class="span2">
         <% if @user.avatar? %>
         <img src="<%= @user.avatar_url %>" class="img-circle">
@@ -50,17 +50,17 @@
             <h6>Email: <%= @user.email %></h6>
         </div>
         
-<% if current_user.id != @user.id %>
-  <% if current_user.friends.include? @user %>
-    <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete, :class =>'btn btn-danger' %>
-  <% else %>
-    <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post, :class =>'btn btn-success' %>
-  <% end %>
-<% else %>
-  <%= link_to 'Edit account', edit_user_registration_path, :class =>'btn btn-success' %>
-<% end %>
-</div>
-</div>
+          <% if current_user.id != @user.id %>
+            <% if current_user.friends.include? @user %>
+              <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete, :class =>'btn btn-danger' %>
+            <% else %>
+              <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post, :class =>'btn btn-success' %>
+            <% end %>
+          <% else %>
+            <%= link_to 'Edit account', edit_user_registration_path, :class =>'btn btn-success' %>
+          <% end %>
+      </div>
+      </div>
               </p>
             </div>
             
