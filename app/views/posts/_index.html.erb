@@ -37,12 +37,12 @@
               <% file = post.avatar.url %>
               <% extension = post.avatar.file.extension.downcase %>
 
-              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
+              <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
                 <%= link_to image_tag(post.avatar_url, :width => 50), post.avatar_url %>
-              <% elsif %w{mp4}.include?(extension) %>
-                <%= link_to "play mp4", post.avatar_url %>
-              <% elsif %w{mp3}.include?(extension) %>
-                <%= link_to "play mp3", post.avatar_url %>
+              <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
+                <%= link_to "play video", post.avatar_url %>
+              <% elsif %w{mp3 wav}.include?(extension) %>
+                <%= link_to "play audio", post.avatar_url %>
               <% else %>
                 <%= link_to "download attatchment", post.avatar_url %> <%= extension %>
               <% end %>

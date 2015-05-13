@@ -1,38 +1,54 @@
-<h2 class="page-header">New Post</h2>
-<%= form_for @post, :html => {:multipart => true} do |f| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<h2 class="page-header">Status Upload</h2>
+<div class="row"> 
+    <div class="col-md-6">
+                <div class="widget-area no-padding blank">
+                <div class="status-upload">
+                  <form action="/posts" method="post" enctype="multipart/form-data">
+                    <textarea name="post[content]" required="true" placeholder="What are you doing right now?" ></textarea>
+                    <ul>
+                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Picture">
+                      <div class="image-upload">
+                      <label for="file-input1"><i class="fa fa-picture-o"></i>
+                      </label>
+                      <input type="file" id="file-input1" name="post[avatar]" accept="image/*" />
+                      </div></a></li>
+                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Audio">
+                      <div class="image-upload">
+                      <label for="file-input2"><i class="fa fa-music"></i>
+                      </label>
+                      <input type="file" id="file-input2" name="post[avatar]" accept="audio/*" />
+                      </div></a></li>
+                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Video">
+                      <div class="image-upload">
+                      <label for="file-input3"><i class="fa fa-video-camera"></i>
+                      </label>
+                      <input type="file" id="file-input3" name="post[avatar]" accept="video/*" />
+                      </div></a></li>
+                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="File">
+                      <div class="image-upload">
+                      <label for="file-input4"><i class="fa fa-paperclip"></i>
+                      </label>
+                      <input type="file" id="file-input4" name="post[avatar]" />
+                      </div></a></li>
+                      <li>
+                        <script>
+                              $(document).ready(function() { $("#tag").select2({placeholder: "Tag user"}); });
+                        </script>
+                        <select style="width: 150px; padding-top: 8px;" id="tag" name="post[tags]" >
+                                 <option value=""></option>
+                              <% @users = User.all %>
+                              <% @users.each do |u| %>
+                                <% if current_user != u %>
+                                <option value="<%= u.name %>"><%= u.name %></option>
+                                <% end %>
+                              <% end %>
+                        </select>
 
-      <ul>
-      <% @post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_area :content, required: true %>
-  </div>
-  <div>
-    <%= f.file_field :avatar %>
-  </div>
-
-  <script>
-        $(document).ready(function() { $("#tag").select2({placeholder: "Tag users"}); });
-  </script>
-  <select id="tag" name="post[tags]" multiple>
-        <% @users = User.all %>
-        <% @users.each do |u| %>
-          <% if current_user != u %>
-          <option value="<%= u.name %>"><%= u.name %></option>
-          <% end %>
-        <% end %>
-  </select>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+                      </li>
+                    </ul>
+                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
+                  </form>
+                </div><!-- Status Upload  -->
+              </div><!-- Widget Area -->
+    </div>    
+</div>

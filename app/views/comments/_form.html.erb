@@ -47,12 +47,12 @@
               <% file = @post.avatar.url %>
               <% extension = @post.avatar.file.extension.downcase %>
 
-              <% if %w{jpg png jpg gif bmp}.include?(extension) %>
-                <%= link_to "view image", @post.avatar_url %>
-              <% elsif %w{mp4}.include?(extension) %>
-                <%= link_to "play mp4", @post.avatar_url %>
-              <% elsif %w{mp3}.include?(extension) %>
-                <%= link_to "play mp3", @post.avatar_url %>
+              <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
+                <%= link_to image_tag(@post.avatar_url, :width => 100), @post.avatar_url %>
+              <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
+                <%= link_to "play video", @post.avatar_url %>
+              <% elsif %w{mp3 wav}.include?(extension) %>
+                <%= link_to "play audio", @post.avatar_url %>
               <% else %>
                 <%= link_to "download attatchment", @post.avatar_url %> Format:<%= extension %>
               <% end %>
@@ -70,7 +70,7 @@
              <div class="input-placeholder">Add a comment...</div>
             </div>
             <div class="panel-google-plus-comment">
-                    <% if current_user.avatar_url %>
+                    <% if current_user.avatar? %>
                     <img height="42" width="42" class="img-circle" src="<%= current_user.avatar_url %>" alt="User Image" />
                     <% else %>
                     <img height="42" width="42" class="img-circle" src="<%= current_user.gravatar_url %>" alt="User Image" />
