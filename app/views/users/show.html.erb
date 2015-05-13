@@ -39,9 +39,9 @@
       <div class="row-fluid">
         <div class="span2">
         <% if @user.avatar? %>
-        <img src="<%= @user.avatar_url %>" class="img-circle">
+        <img height="82" width="82" src="<%= @user.avatar_url %>" class="img-circle">
         <% else %>
-        <img src="<%= @user.gravatar_url %>" class="img-circle">
+        <img height="82" width="82" src="<%= @user.gravatar_url %>" class="img-circle">
         <% end %>
         </div>
         
