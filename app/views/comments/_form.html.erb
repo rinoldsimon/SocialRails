@@ -16,9 +16,9 @@
             <div class="[ panel panel-default ] panel-google-plus">
             <div class="panel-heading">
                     <% if @post.user.avatar? %>
-                    <img class="[ img-circle pull-left ]" src="<%= @post.user.avatar_url %>" />
+                    <img height="82" width="82" class="[ img-circle pull-left ]" src="<%= @post.user.avatar_url %>" />
                     <% else %>
-                    <img class="[ img-circle pull-left ]" src="<%= @post.user.gravatar_url %>" />
+                    <img height="82" width="82" class="[ img-circle pull-left ]" src="<%= @post.user.gravatar_url %>" />
                     <% end %>
                     <h3><%= link_to @post.user.name, @post.user %>
                     <div class="pull-right <%= @post.class %>-<%= @post.id %>">

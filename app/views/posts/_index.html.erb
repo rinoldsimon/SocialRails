@@ -1,14 +1,15 @@
 <br><br><% @posts.each do |post| %>
 <div class="well">
     <div class="row">
+<!-- posts -->
       <div class="media">
       <% if post.user.avatar? %>
       <a class="pull-left" href="<%= post.user.avatar_url %>">
-        <img class="media-object" src="<%= post.user.avatar_url %>">
+        <img height="82" width="82" class="media-object" src="<%= post.user.avatar_url %>">
       </a>
       <% else %>
       <a class="pull-left" href="<%= post.user.gravatar_url %>">
-        <img class="media-object" src="<%= post.user.gravatar_url %>">
+        <img height="82" width="82" class="media-object" src="<%= post.user.gravatar_url %>">
       </a>
       <% end %>
       <div class="media-body">
@@ -45,16 +46,16 @@
           <% end %>
       <ul class="list-inline list-unstyled">
         <li><span><i class="glyphicon glyphicon-calendar"></i> <small><em><%= time_ago_in_words(post.created_at) %> ago </em>(<%= post.created_at.to_time.to_formatted_s(:db) %>)</small> </span></li>
+            <% if current_user.id == post.user_id %>
             <li>|</li>
             <span><i class="glyphicon glyphicon-trash"></i> 
-              <% if current_user.id == post.user_id %>
               <!-- <%# link_to 'Edit', edit_post_path(post) %> -->
               <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
-              <% end %>
             </span>
-            <li>|</li>
+            <% end %>
             <li>
                <% if post.tags? %>
+               <li>|</li>
                <span title="Tags" class="glyphicon glyphicon-tags"></span>
                  <% for user in @users %>
                  <% if post.tags == user.name %>
@@ -66,7 +67,7 @@
       </ul>
        </div>
        </div>
-  
+<!-- comments -->
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">

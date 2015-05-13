@@ -4,10 +4,10 @@
               gchat.user, target: '_blank', class: 'pull-left' %>
   <% else %>
     <%= link_to image_tag(gchat.user.gravatar_url, :width => 50, alt: gchat.user.name, class: "media-object"),
-              gchat.user, target: '_blank', class: 'pull-left' %>
+              gchat.user, class: 'pull-left' %>
   <% end %>
   <div class="media-body">
-    <h4 class="media-heading"><%= link_to gchat.user.name, gchat.user, target: '_blank' %> says
+    <h4 class="media-heading"><%= link_to gchat.user.name, gchat.user %> says
       <small class="text-muted">[at <%= gchat.created_at.to_time.strftime('%-d %B %Y, %H:%M:%S') %>]</small></h4>
     <p><%= gchat.body %></p>
   </div>
