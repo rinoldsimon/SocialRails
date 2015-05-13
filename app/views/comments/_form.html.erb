@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+<h2 class="page-header">Post</h2>
 <div class="row">
         <div class="[ col-xs-6 col-sm-offset-0 col-sm-8 ]">
             <div class="[ panel panel-default ] panel-google-plus">
@@ -43,21 +43,21 @@
                       <%= @post.content %>
                       <% end %><br>
 
-            <% if @post.avatar.present? %>
-              <% file = @post.avatar.url %>
-              <% extension = @post.avatar.file.extension.downcase %>
+                      <% if @post.avatar.present? %>
+                        <% file = @post.avatar.url %>
+                        <% extension = @post.avatar.file.extension.downcase %>
 
-              <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
-                <%= link_to image_tag(@post.avatar_url, :width => 100), @post.avatar_url %>
-              <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
-                <%= link_to "play video", @post.avatar_url %>
-              <% elsif %w{mp3 wav}.include?(extension) %>
-                <%= link_to "play audio", @post.avatar_url %>
-              <% else %>
-                <%= link_to "download attatchment", @post.avatar_url %> Format:<%= extension %>
-              <% end %>
-            <% end %>
-            </p>
+                        <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
+                          <%= link_to image_tag(@post.avatar_url, :width => 500), @post.avatar_url %>
+                        <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
+                          <%= link_to "play video", @post.avatar_url %>
+                        <% elsif %w{mp3 wav}.include?(extension) %>
+                          <%= link_to "play audio", @post.avatar_url %>
+                        <% else %>
+                          <%= link_to "download attatchment", @post.avatar_url %> Format:<%= extension %>
+                        <% end %>
+                      <% end %>
+                    </p>
                 </div>
             <div class="panel-footer">
                     <div class="<%= @post.class %>-<%= @post.id %>">
