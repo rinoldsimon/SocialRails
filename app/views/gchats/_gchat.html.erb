@@ -1,7 +1,7 @@
 <li class="media gchat" data-id="<%= gchat.id %>">
   <% if gchat.user.avatar? %>
     <%= link_to image_tag(gchat.user.avatar_url, :width => 50, alt: gchat.user.name, class: "media-object"),
-              gchat.user, target: '_blank', class: 'pull-left' %>
+              gchat.user, class: 'pull-left' %>
   <% else %>
     <%= link_to image_tag(gchat.user.gravatar_url, :width => 50, alt: gchat.user.name, class: "media-object"),
               gchat.user, class: 'pull-left' %>
