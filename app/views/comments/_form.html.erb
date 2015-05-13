@@ -20,7 +20,12 @@
                     <% else %>
                     <img class="[ img-circle pull-left ]" src="<%= @post.user.gravatar_url %>" />
                     <% end %>
-                    <h3><%= link_to @post.user.name, @post.user %></h3>
+                    <h3><%= link_to @post.user.name, @post.user %>
+                    <div class="pull-right <%= @post.class %>-<%= @post.id %>">
+                      <%= render 'shared/like_form', likeable: @post %>
+                    <div style="float:left;" class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
+                    </div>
+                    </h3>
                     <h5>
                     <% if @post.tags? %>
                       <strong>Tags:</strong>
@@ -34,11 +39,12 @@
                           <% end %>
                         <% end %>
                     <% end %>
-                    <span class="pull-right"><%= time_ago_in_words(@post.created_at) %> ago</span> </h5>
+                    <span class="pull-right"><%= time_ago_in_words(@post.created_at) %> ago</span> 
+                    </h5>
                 </div>
                 <div class="panel-body">
                     <p><% if current_user.id == @post.user_id %>
-                      <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the content to edit)
+                      <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the content to edit)</em></small>
                       <% else %>
                       <%= @post.content %>
                       <% end %><br>
@@ -60,10 +66,6 @@
                     </p>
                 </div>
             <div class="panel-footer">
-                    <div class="<%= @post.class %>-<%= @post.id %>">
-                      <%= render 'shared/like_form', likeable: @post %>
-                    <div style="float:left;" class="likes"><%= pluralize(@post.likers(User).count, 'like')%></div>
-                    </div>
                     <% if current_user.id == @post.user_id %>
                     <%= link_to '<button style="float:left;" type="button" class="[ btn btn-default ]"><span class="[ glyphicon glyphicon-trash ]"></span></button>'.html_safe, @post, method: :delete, data: { confirm: 'Are you sure?' } %>
                     <% end %>

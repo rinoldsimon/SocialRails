@@ -12,8 +12,9 @@
       </a>
       <% end %>
       <div class="media-body">
-        <h4 style="float:left;"class="media-heading"><%= link_to post.user.name, post.user %></h4>
           <p>
+          <h4 style="float:left;" class="media-heading"><%= link_to post.user.name, post.user %></h4>
+          
             <div style="padding-left: 800px;" class="<%= post.class %>-<%= post.id %>">
             <%= render 'shared/like_form', likeable: post %>
             <div class="likes"><%= pluralize(post.likers(User).count, 'like')%></div>
@@ -21,7 +22,7 @@
           </p>
           <p>
             <% if current_user.id == post.user_id %>
-            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %>(click on the post to edit)
+            <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the post to edit)</em></small>
             <% else %>
             <%= post.content %>
             <% end %>
@@ -94,7 +95,7 @@
                                 </div>
                                 <p>
                                   <% if current_user.id == comment.user_id %>
-                                  <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %>(click on the comment to edit)
+                                  <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the comment to edit)</em></small>
                                   <% else %>
                                   <%= comment.body %>
                                   <% end %>
