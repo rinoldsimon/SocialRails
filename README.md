@@ -1,4 +1,4 @@
-SocialRails is a social networking site that I built with Ruby on Rails, Bootstrap, and jQuery 
+SocialRails is a social networking site built with Ruby on Rails, Bootstrap and jQuery 
 
 ### How to get up and running
 
@@ -44,4 +44,3 @@ SocialRails is a social networking site that I built with Ruby on Rails, Bootstr
         :authentication => :plain,
         :enable_starttls_auto => true
       }
-

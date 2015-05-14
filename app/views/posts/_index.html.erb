@@ -1,22 +1,23 @@
 <br><br><% @posts.each do |post| %>
+<% if current_user.id == post.user.id || current_user.friendships.find_by_friend_id(post.user.id) %>
 <div class="well">
     <div class="row">
 <!-- posts -->
       <div class="media">
       <% if post.user.avatar? %>
       <a class="pull-left" href="<%= post.user.avatar_url %>">
-        <img height="82" width="82" class="media-object" src="<%= post.user.avatar_url %>">
+        <img height="92" width="92" class="media-object" src="<%= post.user.avatar_url %>">
       </a>
       <% else %>
       <a class="pull-left" href="<%= post.user.gravatar_url %>">
-        <img height="82" width="82" class="media-object" src="<%= post.user.gravatar_url %>">
+        <img height="92" width="92" class="media-object" src="<%= post.user.gravatar_url %>">
       </a>
       <% end %>
       <div class="media-body">
           <p>
           <h4 style="float:left;" class="media-heading"><%= link_to post.user.name, post.user %></h4>
           
-            <div style="padding-left: 800px;" class="<%= post.class %>-<%= post.id %>">
+            <div style="padding-left: 790px;" class="<%= post.class %>-<%= post.id %>">
             <%= render 'shared/like_form', likeable: post %>
             <div class="likes"><%= pluralize(post.likers(User).count, 'like')%></div>
             </div>
@@ -128,4 +129,5 @@
     </div>
 
 </div>
+<% end %>
 <% end %>
