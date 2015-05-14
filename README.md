@@ -44,4 +44,3 @@ SocialRails is a social networking site built with Ruby on Rails, Bootstrap and 
         :authentication => :plain,
         :enable_starttls_auto => true
       }
-
