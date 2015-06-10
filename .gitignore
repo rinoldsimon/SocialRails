@@ -18,3 +18,4 @@ public/uploads
 /config/initializers/devise.rb
 /config/environments/development.rb
 /config/environments/production.rb
+.env
