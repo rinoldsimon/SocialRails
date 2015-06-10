@@ -32,7 +32,7 @@
                             <div class="media-body">
                                 
                               <h4 class="media-heading user_name"><%= link_to comment.user.name,comment.user %></h4>
-                              <% if current_user.id == comment.user_id %>
+                              <% if current_user.has_role? :admin or current_user.id == comment.user_id %>
                                 <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the content to edit)</em></small>
                               <% else %>
                                 <%= comment.body %>
