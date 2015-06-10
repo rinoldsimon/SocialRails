@@ -23,7 +23,7 @@
             </div>
           </p>
           <p>
-            <% if current_user.id == post.user_id %>
+            <% if current_user.has_role? :admin or current_user.id == post.user_id %>
             <%= best_in_place post, :content, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the post to edit)</em></small>
             <% else %>
             <%= post.content %>
@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
                                 <p>
-                                  <% if current_user.id == comment.user_id %>
+                                  <% if current_user.has_role? :admin or current_user.id == comment.user_id %>
                                   <%= best_in_place comment, :body, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the comment to edit)</em></small>
                                   <% else %>
                                   <%= comment.body %>
@@ -107,7 +107,7 @@
                             <%= render 'shared/like_form', likeable: comment %>
                             <div style="float:left;" class="likes"><%= pluralize(comment.likers(User).count, 'like')%></div>
                             </div>
-                            <% if current_user.id == comment.user_id %>
+                            <% if current_user.has_role? :admin or current_user.id == comment.user_id %>
                             <%= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?'}, :class=>'pull-right' %>
                             <%# link_to 'Edit', edit_comment_path(comment) %>
                             <% end %>
