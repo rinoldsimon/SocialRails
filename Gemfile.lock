@@ -126,6 +126,8 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
+    puma (2.9.1)
+      rack (>= 1.1, < 2.0)
     rack (1.5.3)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -214,6 +216,7 @@ DEPENDENCIES
   omniauth-github
   pg
   public_activity
+  puma
   rails (= 4.1.4)
   rails_12factor
   rolify
