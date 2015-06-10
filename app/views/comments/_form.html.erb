@@ -43,7 +43,7 @@
                     </h5>
                 </div>
                 <div class="panel-body">
-                    <p><% if current_user.id == @post.user_id %>
+                    <p><% if current_user.has_role? :admin or current_user.id == @post.user_id %>
                       <%= best_in_place @post, :content, :type => :textarea, :nil => "Click me to add content!" %><small><em>(click on the content to edit)</em></small>
                       <% else %>
                       <%= @post.content %>
@@ -66,7 +66,7 @@
                     </p>
                 </div>
             <div class="panel-footer">
-                    <% if current_user.id == @post.user_id %>
+                    <% if current_user.has_role? :admin or current_user.id == @post.user_id %>
                     <%= link_to '<button style="float:left;" type="button" class="[ btn btn-default ]"><span class="[ glyphicon glyphicon-trash ]" style="vertical-align:middle"></span></button>'.html_safe, @post, method: :delete, data: { confirm: 'Are you sure?' } %>
                     <% end %>
              <div class="input-placeholder">Add a comment...</div>
