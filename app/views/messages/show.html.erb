@@ -2,9 +2,9 @@
 <%= render "layouts/sidenav" %>
 <div class="col-md-10 content">
 
- <h2 class="page-header">Received Messages</h2>
+<h2 class="page-header">Received Messages</h2>
 
-<% @message.each do |m| %>
+<% @message.each do |key, value| %>
    <div class="row">
     <div class="col-md-8">
         <section class="comment-list">
@@ -12,33 +12,37 @@
           <article class="row">
             <div class="col-md-3 col-sm-2 hidden-xs">
               <figure class="thumbnail">
-                  <% @name = User.where(:id => m.user_id) %>
-                  <% @name.each do |i| %>
-                  <% if i.avatar? %>
-                  <%= image_tag(i.avatar_url, :width => 50, :height => 50) %>
-                  <% else %>
-                  <%= image_tag(i.gravatar_url, :width => 50, :height => 50) %>
+                  <% value.each do |m| %>
+                    <% @id = m.user_id %>
                   <% end %>
-                  <% end %>
-                <figcaption class="text-center">       
-                  <% @name.each do |n| %>
-                  <%= link_to n.name, n %>
-                  <% end %>
-                </figcaption>
+                  <% user = User.where(:id => @id) %>
+                  <% user.each do |i| %>
+                    <% if i.avatar? %>
+                      <%= image_tag(i.avatar_url, :width => 50, :height => 50) %>
+                    <% else %>
+                      <%= image_tag(i.gravatar_url, :width => 50, :height => 50) %>
+                    <% end %>
+                    <figcaption class="text-center">       
+                      <%= link_to i.name, i %>
+                    </figcaption>
+                <% end %>
               </figure>
             </div>
             <div class="col-md-9 col-sm-10">
               <div class="panel panel-default arrow left">
                 <div class="panel-body">
+                <%= link_to '<div class="pull-right"> <span class="glyphicon glyphicon-share"></span> Reply</div>'.html_safe,new_message_path(:recv_uid => @id ) %>
+                <% value.each do |m| %>
                   <header class="text-left">
                     <time class="comment-date"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(m.created_at) %> ago | <%= m.created_at.to_time.to_formatted_s(:db) %> </time>
                   </header>
                   <div class="comment-post">
-                    <p>
+                    <p class="text-left">
                       <%= m.message %>
                     </p>
                   </div>
-                </div>
+                <% end %>
+                </div> 
               </div>
             </div>
           </article>

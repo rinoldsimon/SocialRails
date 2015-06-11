@@ -47,7 +47,8 @@
         
         <div class="span8">
             <h3><%=h @user.name %></h3>
-            <h6>Email: <%= @user.email %></h6>
+            <h5>Email: <%= @user.email %></h5>
+            <h6>Joined: <%= @user.created_at.strftime("%B #{@user.created_at.day.ordinalize}, %Y | %H:%M:%S") %></h6>
         </div>
         
           <% if current_user.id != @user.id %>

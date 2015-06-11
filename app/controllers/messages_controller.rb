@@ -10,11 +10,11 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.where(:receiver_user_id => current_user.id)
+    @message = Message.where(:receiver_user_id => current_user.id).group_by {|m| m.user_id}
   end
 
   def sent
-    @sentmessage = Message.where(:user_id => current_user.id)
+    @sentmessage = Message.where(:user_id => current_user.id).group_by {|m| m.receiver_user_id}
   end
 
   def create

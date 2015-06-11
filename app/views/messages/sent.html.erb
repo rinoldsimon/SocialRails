@@ -4,7 +4,7 @@
 
 <h2 class="page-header">Sent Messages</h2>
 
-<% @sentmessage.each do |m| %>
+<% @sentmessage.each do |key, value| %>
 
   <div class="row">
     <div class="col-md-8">
@@ -15,6 +15,7 @@
             <div class="col-md-9 col-sm-10">
               <div class="panel panel-default arrow right">
                 <div class="panel-body">
+                <% value.each do |m| %>
                   <header class="text-right">
                     <time class="comment-date"><i class="fa fa-clock-o"></i> <%= time_ago_in_words(m.created_at) %> ago | <%= m.created_at.to_time.to_formatted_s(:db) %> </time>
                   </header>
@@ -23,23 +24,27 @@
                       <%= m.message %>
                     </p>
                   </div>
+                <% end %>
                 </div>
               </div>
             </div>
             <div class="col-md-3 col-sm-2 hidden-xs">
               <figure class="thumbnail">
-                  <% @name = User.find_by_id(m.receiver_user_id) %> 
-                  <% if @name == nil || @name == "" %>
-                  <% elsif @name.avatar? %>
-                  <%= image_tag(@name.avatar_url, :width => 50, :height => 50) %>
+                <% value.each do |m| %>
+                  <% @id = m.receiver_user_id %>
+                <% end %>
+                  <% user = User.find_by_id(@id) %> 
+                  <% if user == nil || user == "" %>
+                  <% elsif user.avatar? %>
+                  <%= image_tag(user.avatar_url, :width => 50, :height => 50) %>
                   <% else %>
-                  <%= image_tag(@name.gravatar_url, :width => 50, :height => 50) %>
+                  <%= image_tag(user.gravatar_url, :width => 50, :height => 50) %>
                   <% end %>
                 <figcaption class="text-center">       
-                  <% if @name == nil || @name == "" %>   
+                  <% if user == nil || user == "" %>   
                     <i>(user left)</i>
                   <% else %>
-                       <%= link_to @name.name, @name %>
+                       <%= link_to user.name, user %>
                   <% end %>
                 </figcaption>
               </figure>

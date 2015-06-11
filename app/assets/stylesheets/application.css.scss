@@ -486,6 +486,7 @@ h1.page-header {
     border-left: 0;
   }
   /*****Left Arrow*****/
+  .panel.arrow.left:hover { background-color: rgba(86,61,124,.1); }
   /*Outline effect style*/
   .comment-list .panel.arrow.left:before {
     left: 0px;
