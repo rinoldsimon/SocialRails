@@ -1,3 +1,5 @@
+Please read companion blog post: https://learnrubyblog.wordpress.com/2015/05/16/32-is-it-easy-to-build-a-social-network-using-rails/
+
 SocialRails is a social networking site built with Ruby on Rails, Bootstrap and jQuery 
 
 ### How to get up and running
