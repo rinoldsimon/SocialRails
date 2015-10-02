@@ -25,7 +25,9 @@
                      <% end %>
                 </div>
                 <div class="text">
-                    <label class="text-muted"><%= link_to user.name, user %></label>
+                    <label class="text-muted">
+                      <%= link_to user.name.first(10) , user %>
+                    </label>
                 </div>
                 <span class=" badge badge-info">Friends: <%= user.friends.count %></span>
                 <div class="options">

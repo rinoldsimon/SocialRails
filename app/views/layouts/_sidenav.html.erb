@@ -10,8 +10,8 @@
                     <%= image_tag(current_user.avatar_url, :width => 100, :height => 100) %>   
                     <%= current_user.name %>
                   <% else %>                 
-                    <%= image_tag(current_user.gravatar_url, :width => 100, :height => 100) %>
-                    <%= current_user.name %>           
+                    <%= image_tag(current_user.gravatar_url, :width => 100, :height => 100) %> 
+                    <%=h truncate(current_user.name, :length => 10) %>        
                 <% end %>
           </li>
           <!-- Dropdown-->
