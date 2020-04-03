@@ -67,7 +67,7 @@ GEM
     email_validator (1.6.0)
       activemodel
     erubis (2.7.0)
-    excon (0.45.3)
+    excon (0.73.0)
     execjs (2.5.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
