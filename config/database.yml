@@ -84,6 +84,21 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+# One Neon database. Rails 8 still eager-loads Solid Cache/Queue/Cable,
+# which look up named connections even when we use memory_store + async jobs.
 production:
-  <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  primary:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+  cache:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    database_tasks: false
+  queue:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    database_tasks: false
+  cable:
+    <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
+    database_tasks: false

@@ -12,6 +12,8 @@ services:
     envVars:
       - key: RAILS_ENV
         value: production
+      - key: WEB_CONCURRENCY
+        value: "1"
       - key: FORCE_SEEDS
         value: "1"
       - key: DATABASE_URL
