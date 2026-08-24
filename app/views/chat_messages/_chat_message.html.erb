@@ -1,0 +1,10 @@
+<div class="flex gap-3">
+  <%= avatar_tag chat_message.user, size: :sm %>
+  <div>
+    <p class="text-sm">
+      <%= link_to chat_message.user.name, user_path(chat_message.user), class: "font-medium text-ink hover:text-rail" %>
+      <span class="text-muted"> · <%= formatted_time(chat_message.created_at) %></span>
+    </p>
+    <p class="whitespace-pre-wrap text-sm text-ink"><%= chat_message.body %></p>
+  </div>
+</div>

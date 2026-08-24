@@ -1,0 +1,44 @@
+<div class="mx-auto mt-10 max-w-lg" data-controller="square-demo">
+  <p class="mb-3 text-center text-xs uppercase tracking-[0.18em] text-muted">Inside the app</p>
+  <p class="mb-4 min-h-6 text-center text-sm text-ink" data-square-demo-target="caption">The square, newest first.</p>
+
+  <div class="square-demo overflow-hidden rounded-lg border border-line bg-card" data-square-demo-target="stage" data-scene="idle">
+    <div class="flex items-center justify-between border-b border-line px-4 py-2.5">
+      <span class="font-serif text-base text-ink">The square</span>
+      <span class="text-xs text-muted">Everyone · newest first</span>
+    </div>
+
+    <div class="demo-panel demo-follow flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+      <div class="flex items-center gap-2">
+        <span class="demo-avatar" style="background: hsl(18 52% 32%)">L</span>
+        <div>
+          <p class="text-sm font-medium text-ink">Lena Okonkwo</p>
+          <p class="text-xs text-muted">@lena</p>
+        </div>
+      </div>
+      <span class="demo-follow-idle rounded-md bg-ink px-2.5 py-1 text-xs text-paper">Follow</span>
+      <span class="demo-follow-on rounded-md border border-line px-2.5 py-1 text-xs text-muted">Following</span>
+    </div>
+
+    <article class="demo-panel demo-post px-4 py-4">
+      <div class="flex gap-3">
+        <span class="demo-avatar mt-0.5" style="background: hsl(22 48% 30%)">M</span>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm"><span class="font-medium text-ink">Maya Chen</span> <span class="text-muted">@maya · now</span></p>
+          <p class="mt-2 text-[15px] leading-relaxed text-ink">Newest first. No ranking. If the square is quiet, that is a feature.</p>
+          <p class="demo-like-idle mt-3 text-sm text-muted">Like · 0</p>
+          <p class="demo-like-on mt-3 text-sm font-medium text-rail">Liked · 3</p>
+          <div class="demo-comment mt-3 rounded-md bg-paper px-3 py-2 text-sm">
+            <p class="font-medium text-ink">Arjun Patel</p>
+            <p class="mt-0.5 text-ink">This is the whole pitch. Put it in the header.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="demo-panel demo-message border-t border-line px-4 py-3">
+      <p class="text-xs text-muted">Direct message</p>
+      <p class="mt-1 text-sm text-ink">Maya → Arjun: The square looks lived-in. Seeds were the right call.</p>
+    </div>
+  </div>
+</div>

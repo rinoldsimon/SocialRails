@@ -1,0 +1,20 @@
+<% page_title "Message" %>
+<% other = @conversation.other_than(current_user) %>
+
+<div class="mb-4 flex items-center gap-3">
+  <%= avatar_tag other %>
+  <div>
+    <h1 class="font-serif text-2xl text-ink"><%= other.name %></h1>
+    <p class="text-sm text-muted">@<%= other.username %></p>
+  </div>
+</div>
+
+<%= turbo_stream_from @conversation %>
+
+<div id="direct-messages" class="space-y-3 rounded-lg border border-line bg-card p-4">
+  <%= render @messages %>
+</div>
+
+<div class="mt-4">
+  <%= render "direct_messages/form", conversation: @conversation, direct_message: @direct_message %>
+</div>

@@ -1,73 +1,18 @@
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<% page_title "Edit profile" %>
 
-<div class="container">
-    
-  <div class="omb_login">
+<div class="mx-auto max-w-md">
+  <h1 class="font-serif text-3xl text-ink">Edit profile</h1>
 
-  <div class="container-fluid main-container">
-  
-
-  <h3 class="omb_authTitle">Edit <%= resource_name.to_s.humanize %></h3>
-
-    <div class="row omb_row-sm-offset-3">
-      <div class="col-xs-12 col-sm-6">  
-      
-          <form class="omb_loginForm" action="" autocomplete="off" method="POST">
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input type="text" autofocus="true" value ="<%= @user.name %>" class="form-control" name="user[name]" placeholder="Name">
-          </div>
-          <span class="help-block"></span>
-
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input type="text" value ="<%= @user.email %>" class="form-control" name="user[email]" placeholder="Email address">
-          </div>
-          <span class="help-block"></span>
-          
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-          <% end %> 
-
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input  autocomplete="off" type="password" value ="<%= @user.password %>" class="form-control" name="user[password]" placeholder="Password (leave blank if you don't want to change it)">
-          </div>
-          <span class="help-block"></span>
-                    
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input type="password" value ="<%= @user.password_confirmation %>" class="form-control" name="user[password_confirmation]" placeholder="Confirm Password">
-          </div>
-          <span class="help-block"></span>
-            
-          
-          <h3>Profile Picture</h3>
-          <%= f.file_field :avatar %>
-          <h3><%= f.check_box :remove_avatar %>
-          Remove Profile picture</h3>
-                
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input type="password" value ="<%= @user.current_password %>" class="form-control" name="user[current_password]" placeholder="Current Password (we need your current password to confirm your changes)">
-          </div>
-                    <span class="help-block"><font color="red"> <%= devise_error_messages! %> </font></span>
-
-          <div class="col-xs-4 col-sm-6">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
-          </div>
-
-          <div class="col-xs-4 col-sm-6">
-          <%= link_to 'Cancel my account', registration_path(resource_name), :class => 'btn btn-lg btn-danger btn-block', data: { confirm: "Are you sure?" }, method: :delete %>
-          </div>
-
-        </form>
-
-      </div>
-      </div> 
-      </div>   
-  </div>
-
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "mt-6 space-y-3" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+    <%= f.text_field :name, placeholder: "Name", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.text_field :username, placeholder: "username", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.email_field :email, autocomplete: "email", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.text_area :bio, placeholder: "Bio", rows: 3, class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.text_field :github_username, placeholder: "GitHub username", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.password_field :password, autocomplete: "new-password", placeholder: "New password (leave blank to keep)", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm new password", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Current password (required to save)", class: "w-full rounded-md border border-line bg-card px-3 py-2 text-sm outline-none focus:border-rail" %>
+    <%= f.submit "Save", class: "w-full rounded-md bg-rail py-2 text-sm font-medium text-paper hover:bg-rail-dark" %>
+  <% end %>
 </div>
-
-<% end %>

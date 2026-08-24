@@ -1,0 +1,19 @@
+<div class="flex items-start justify-between gap-3">
+  <div class="flex min-w-0 items-start gap-3">
+    <%= link_to user_path(user), class: "mt-0.5" do %><%= avatar_tag user, size: :sm %><% end %>
+    <div class="min-w-0">
+      <p class="truncate text-sm font-medium text-ink">
+        <%= link_to user.name, user_path(user), class: "hover:text-rail" %>
+      </p>
+      <p class="text-xs text-muted">@<%= user.username %></p>
+    </div>
+  </div>
+  <% if user_signed_in? && user != current_user %>
+    <% follow = current_user.active_follows.find_by(followed_id: user.id) %>
+    <% if follow %>
+      <%= button_to "Following", follow_path(follow), method: :delete, class: "rounded-md border border-line px-2.5 py-1 text-xs text-muted hover:border-rail hover:text-rail" %>
+    <% else %>
+      <%= button_to "Follow", user_follow_path(user), class: "rounded-md bg-ink px-2.5 py-1 text-xs text-paper hover:bg-rail" %>
+    <% end %>
+  <% end %>
+</div>

@@ -1,54 +1,9 @@
-<h2 class="page-header">Status Upload</h2>
-<div class="row"> 
-    <div class="col-md-6">
-                <div class="widget-area no-padding blank">
-                <div class="status-upload">
-                  <form action="/posts" method="post" enctype="multipart/form-data">
-                    <textarea name="post[content]" required="true" placeholder="What are you doing right now?" ></textarea>
-                    <ul>
-                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Picture">
-                      <div class="image-upload">
-                      <label for="file-input1"><i class="fa fa-picture-o"></i>
-                      </label>
-                      <input type="file" id="file-input1" name="post[avatar]" accept="image/*" />
-                      </div></a></li>
-                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Audio">
-                      <div class="image-upload">
-                      <label for="file-input2"><i class="fa fa-music"></i>
-                      </label>
-                      <input type="file" id="file-input2" name="post[avatar]" accept="audio/*" />
-                      </div></a></li>
-                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="Video">
-                      <div class="image-upload">
-                      <label for="file-input3"><i class="fa fa-video-camera"></i>
-                      </label>
-                      <input type="file" id="file-input3" name="post[avatar]" accept="video/*" />
-                      </div></a></li>
-                      <li><a data-toggle="tooltip" data-placement="bottom" data-original-title="File">
-                      <div class="image-upload">
-                      <label for="file-input4"><i class="fa fa-paperclip"></i>
-                      </label>
-                      <input type="file" id="file-input4" name="post[avatar]" />
-                      </div></a></li>
-                      <li>
-                        <script>
-                              $(document).ready(function() { $("#tag").select2({placeholder: "Tag user", allowClear: true}); });
-                        </script>
-                        <select style="width: 150px; padding-top: 8px;" id="tag" name="post[tags]" >
-                                 <option value=""></option>
-                              <% @users = User.all %>
-                              <% @users.each do |u| %>
-                                <% if current_user != u %>
-                                <option value="<%= u.name %>"><%= u.name %></option>
-                                <% end %>
-                              <% end %>
-                        </select>
-
-                      </li>
-                    </ul>
-                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Share</button>
-                  </form>
-                </div><!-- Status Upload  -->
-              </div><!-- Widget Area -->
-    </div>    
-</div>
+<%= form_with model: post, id: "composer", class: "rounded-lg border border-line bg-card p-4" do |f| %>
+  <label class="font-serif text-lg text-ink">What’s on the rails?</label>
+  <p class="mt-1 text-xs text-muted">Newest first. No ranking. No ads.</p>
+  <%= f.text_area :body, rows: 3, maxlength: 500, required: true, placeholder: "A thought, a ship, a question…", class: "mt-3 w-full resize-y rounded-md border border-line bg-paper px-3 py-2 text-sm outline-none focus:border-rail", data: { controller: "composer", action: "input->composer#count" } %>
+  <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+    <%= f.url_field :link_url, placeholder: "Optional repo or link (https://…)", class: "min-w-[12rem] flex-1 rounded-md border border-line bg-paper px-3 py-1.5 text-sm outline-none focus:border-rail" %>
+    <%= f.submit "Post", class: "rounded-md bg-rail px-4 py-1.5 text-sm font-medium text-paper hover:bg-rail-dark" %>
+  </div>
+<% end %>

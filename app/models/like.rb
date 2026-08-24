@@ -1,5 +1,6 @@
-class Like < Socialization::ActiveRecordStores::Like
-	include PublicActivity::Model
-	#tracked
-	tracked owner: ->(controller, model) { controller && controller.current_user }
+class Like < ApplicationRecord
+  belongs_to :user
+  belongs_to :likeable, polymorphic: true
+
+  validates :user_id, uniqueness: { scope: [ :likeable_type, :likeable_id ] }
 end

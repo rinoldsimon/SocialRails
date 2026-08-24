@@ -1,11 +1,42 @@
-<div class="container-fluid main-container">
-<%= render "layouts/sidenav" %>
-<div class="col-md-10 content">
+<% page_title "Town square" %>
 
-<%= render 'posts/form' %>
-<%= render 'posts/index' %>
+<div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_16rem]">
+  <div>
+    <div class="mb-6 flex items-end justify-between gap-4">
+      <div>
+        <h1 class="font-serif text-3xl text-ink">The square</h1>
+        <p class="mt-1 text-sm text-muted">A chronological town square for builders.</p>
+      </div>
+      <div class="flex text-sm">
+        <%= link_to "Everyone", root_path, class: "px-2 py-1 #{@scope != :following ? 'text-rail' : 'text-muted'}" %>
+        <%= link_to "Following", root_path(scope: "following"), class: "px-2 py-1 #{@scope == :following ? 'text-rail' : 'text-muted'}" %>
+      </div>
+    </div>
 
-<%# will_paginate @posts %>
+    <%= render "posts/form", post: @post %>
 
-</div>
+    <div id="posts">
+      <%= render @posts %>
+    </div>
+    <% if @posts.empty? %>
+      <p class="mt-8 text-sm text-muted">No posts in this view yet. Follow people, or switch to Everyone.</p>
+    <% end %>
+  </div>
+
+  <aside class="space-y-4">
+    <div class="rounded-lg border border-line bg-card p-4">
+      <h2 class="font-serif text-lg text-ink">On the rails</h2>
+      <p class="mt-2 text-sm leading-relaxed text-muted">Follow builders. Like and reply live. The Yard is the public room. Direct messages stay between two people.</p>
+    </div>
+    <% if @suggested.any? %>
+      <div class="rounded-lg border border-line bg-card p-4">
+        <h2 class="text-sm font-medium text-ink">People to meet</h2>
+        <ul class="mt-3 space-y-4">
+          <% @suggested.each do |user| %>
+            <li><%= render "users/card", user: user %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </aside>
 </div>

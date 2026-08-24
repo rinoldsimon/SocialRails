@@ -1,47 +1,18 @@
-<div class="container-fluid main-container">
-<%= render "layouts/sidenav" %>
-<div class="col-md-10 content">
+<% page_title "People" %>
 
-<h2 class="page-header">Users</h2>
-
-<form class="navbar-form navbar-left" method="get" id="search-form">
-        <div class="form-group">
-          <input type="text" name="<%= :search %>" class="form-control" placeholder="Search Users">
-        </div>
-        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-</form>
-<br style="clear:both">
-<% for user in @users %>
-
-<% if current_user.id != user.id %>
-
-        <div class="col-sm-3">
-          <div class="hero-widget well well-sm">
-                <div>
-                     <% if user.avatar? %>
-                       <%= image_tag(user.avatar_url, :width => 100, :height => 100) %>
-                     <% else %>                 
-                       <%= image_tag(user.gravatar_url, :width => 100, :height => 100) %>   
-                     <% end %>
-                </div>
-                <div class="text">
-                    <label class="text-muted">
-                      <%= link_to user.name.first(10) , user %>
-                    </label>
-                </div>
-                <span class=" badge badge-info">Friends: <%= user.friends.count %></span>
-                <div class="options">
-                  <%if current_user.friends.include? user %>
-                  <%= link_to '<i class="glyphicon glyphicon-plus"></i> Remove Friend'.html_safe, friendship_path(current_user.friendships.find_by_friend_id(user)), :class => 'btn btn-primary btn-lg', :method => :delete %>
-                  <% else %>
-                  <%= link_to '<i class="glyphicon glyphicon-plus"></i> Add Friend'.html_safe, friendships_path(:friend_id => user), :class => 'btn btn-primary btn-lg', :method => :post %>
-                  <% end %>
-                </div>
-          </div>
-        </div>
-
-<% end %>
-<% end %>
-
+<div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="font-serif text-3xl text-ink">People</h1>
+    <p class="mt-1 text-sm text-muted">Find builders by name or username.</p>
+  </div>
+  <%= form_with url: users_path, method: :get, class: "flex gap-2" do %>
+    <%= text_field_tag :q, @query, placeholder: "Search", class: "rounded-md border border-line bg-card px-3 py-1.5 text-sm outline-none focus:border-rail" %>
+    <%= submit_tag "Search", class: "rounded-md border border-line px-3 py-1.5 text-sm" %>
+  <% end %>
 </div>
-</div>
+
+<ul class="divide-y divide-line rounded-lg border border-line bg-card">
+  <% @users.each do |user| %>
+    <li class="px-4 py-3"><%= render "users/card", user: user %></li>
+  <% end %>
+</ul>

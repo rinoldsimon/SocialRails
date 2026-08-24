@@ -1,0 +1,12 @@
+<% like = user_signed_in? ? likeable.likes.find { |l| l.user_id == current_user.id } : nil %>
+<% if user_signed_in? && like %>
+  <%= button_to like_path(like), method: :delete, class: "hover:text-rail" do %>
+    Liked · <%= likeable.likes.size %>
+  <% end %>
+<% elsif user_signed_in? %>
+  <%= button_to likes_path(likeable_type: likeable.class.name, likeable_id: likeable.id), class: "hover:text-ink" do %>
+    Like · <%= likeable.likes.size %>
+  <% end %>
+<% else %>
+  <span>Like · <%= likeable.likes.size %></span>
+<% end %>

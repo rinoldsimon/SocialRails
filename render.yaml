@@ -1,0 +1,23 @@
+# Render Blueprint — do not put secrets in this file.
+# After first deploy, set FORCE_SEEDS back to 0 (or delete it).
+
+services:
+  - type: web
+    name: socialrails
+    runtime: ruby
+    plan: free
+    buildCommand: chmod +x bin/render-build.sh && ./bin/render-build.sh
+    startCommand: bundle exec puma -C config/puma.rb
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: FORCE_SEEDS
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: APP_HOST
+        sync: false
+      - key: RAILS_MASTER_KEY
+        sync: false

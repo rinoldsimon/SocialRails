@@ -1,0 +1,16 @@
+<% page_title "The Yard" %>
+
+<%= turbo_stream_from "yard" %>
+
+<div class="mb-6">
+  <h1 class="font-serif text-3xl text-ink">The Yard</h1>
+  <p class="mt-1 text-sm text-muted">One public room. Messages land live for everyone who’s here.</p>
+</div>
+
+<div id="yard-messages" class="space-y-3 rounded-lg border border-line bg-card p-4">
+  <%= render @chat_messages %>
+</div>
+
+<div class="mt-4">
+  <%= render "chat_messages/form", chat_message: @chat_message %>
+</div>

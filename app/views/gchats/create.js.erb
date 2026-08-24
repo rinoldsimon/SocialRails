@@ -1,7 +1,0 @@
-Poller.clear();
-Poller.poll(0);
-<% if @gchat.new_record? %>
-  alert('Your message cannot be sent at the moment.');
-<% else %>
-  $('#gchat_body').val('');
-<% end %>

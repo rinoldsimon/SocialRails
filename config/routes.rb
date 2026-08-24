@@ -1,29 +1,29 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 
-  get 'messages/index'
-  get 'messages/sent'
+  get "up" => "rails/health#show", as: :rails_health_check
 
-  get 'home/index'
-  root :to => 'home#index' 
+  resources :users, only: [ :index, :show ], param: :username do
+    resource :follow, only: :create
+  end
+  resources :follows, only: :destroy
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  resources :posts, only: [ :create, :destroy ] do
+    resources :comments, only: [ :create, :destroy ]
+  end
+  resources :likes, only: [ :create, :destroy ]
 
-  get 'users/index'
-  get 'users/show'
-  get '/users/:id', :to => 'users#show', :as => :user
-  get 'like' => 'users#like'
-  get 'unlike' => 'users#unlike'
+  resources :conversations, only: [ :index, :show, :create ] do
+    resources :direct_messages, only: :create
+  end
 
-  get 'activities/index'
-  get 'activities/user'
+  get "yard", to: "yard#show", as: :yard
+  resources :chat_messages, only: :create
 
-  resources :comments
-  resources :posts
-  resources :friendships
-  resources :messages
-  resources :contacts
+  if Rails.env.development?
+    require "letter_opener_web"
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
 
-  resources :gchats, only: [:new, :create, :index]
-  get 'gchats/new'
-  
+  root "home#index"
 end

@@ -1,120 +1,45 @@
-<div class="container-fluid main-container">
-<%= render "layouts/sidenav" %>
-<div class="col-md-10 content">
+<% page_title @user.name %>
 
-    <% if current_user.id == @user.id %>
-    <h2 class="page-header">My Profile</h2>
-    <% else %>
-    <h2 class="page-header"><%= @user.name.pluralize.humanize %> Profile </h2>
-    <% end %>
-
-    <div class="row">
-    <div class="col-md-12">
-
-      <div class="tabbable-panel">
-        <div class="tabbable-line">
-          <ul class="nav nav-tabs ">
-            <li class="active">
-              <a href="#tab_default_1" data-toggle="tab">
-              Personal </a>
-            </li>
-            <% if current_user.id != @user.id %>
-              <li>
-                <a href="#tab_default_2" data-toggle="tab">Activities </a>
-              </li>
-            <% end %>
-            <li>
-              <a href="#tab_default_3" data-toggle="tab">
-              Following </a>
-            </li>
-            <li>
-              <a href="#tab_default_4" data-toggle="tab">
-              Followers </a>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="tab_default_1">
-              <p>
-      <div class="container-fluid well span6">
-      <div class="row-fluid">
-        <div class="span2">
-        <% if @user.avatar? %>
-        <img height="82" width="82" src="<%= @user.avatar_url %>" class="img-circle">
-        <% else %>
-        <img height="82" width="82" src="<%= @user.gravatar_url %>" class="img-circle">
+<section class="rounded-lg border border-line bg-card p-6">
+  <div class="flex flex-wrap items-start justify-between gap-4">
+    <div class="flex gap-4">
+      <%= avatar_tag @user, size: :lg %>
+      <div>
+        <h1 class="font-serif text-3xl text-ink"><%= @user.name %></h1>
+        <p class="text-muted">@<%= @user.username %></p>
+        <% if @user.bio.present? %>
+          <p class="mt-3 max-w-xl text-sm leading-relaxed text-ink"><%= @user.bio %></p>
         <% end %>
-        </div>
-        
-        <div class="span8">
-            <h3><%=h @user.name %></h3>
-            <h5>Email: <%= @user.email %></h5>
-            <h6>Joined: <%= @user.created_at.strftime("%B #{@user.created_at.day.ordinalize}, %Y | %H:%M:%S") %></h6>
-        </div>
-        
-          <% if current_user.id != @user.id %>
-            <% if current_user.friends.include? @user %>
-              <%= link_to "Remove Friendship", current_user.friendships.find_by_friend_id(@user.id), method: :delete, :class =>'btn btn-danger' %>
-            <% else %>
-              <%= link_to "Add Friend", friendships_path(friend_id: @user), method: :post, :class =>'btn btn-success' %>
-            <% end %>
-          <% else %>
-            <%= link_to 'Edit account', edit_user_registration_path, :class =>'btn btn-success' %>
+        <p class="mt-3 text-sm text-muted">
+          <%= pluralize(@user.following.count, "following") %> · <%= pluralize(@user.followers.count, "follower") %>
+          <% if github_url(@user) %>
+            · <%= link_to "GitHub", github_url(@user), class: "text-rail hover:underline", target: "_blank", rel: "noreferrer" %>
           <% end %>
-      </div>
-      </div>
-              </p>
-            </div>
-            
-            <div class="tab-pane" id="tab_default_2">
-              <p>
-                <% if current_user.id != @user.id %>
-                  <h2>Posts</h2>
-                  <div class="row">
-                    <div class="col-md-10">
-                      <div class="timeline-centered"> 
-                  <%= render @user.posts %>
-                       </div>
-                    </div>
-                  </div>
-                  
-                  <h2>Comments</h2>
-                  <div class="row">
-                    <div class="col-md-10">
-                      <div class="timeline-centered"> 
-                  <%= render @user.comments.order("id DESC") %>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              </p>
-            </div>
-
-            <div class="tab-pane" id="tab_default_3">
-              <p>
-               <ul>
-                 <% for friendship in @user.friendships %>
-                   <li>
-                     <%=h link_to friendship.friend.name, friendship.friend %>
-                   </li>
-                  <% end %>
-               </ul>
-              </p>
-            </div>
-
-            <div class="tab-pane" id="tab_default_4">
-              <p>
-                <ul>
-                  <% for user in @user.inverse_friends %>
-                    <li><%=h link_to user.name, user %></li>
-                  <% end %>
-                </ul>
-              </p>
-            </div>
-          </div>
-        </div>
+        </p>
       </div>
     </div>
+    <div class="flex gap-2">
+      <% if user_signed_in? && @user != current_user %>
+        <% follow = current_user.active_follows.find_by(followed_id: @user.id) %>
+        <% if follow %>
+          <%= button_to "Following", follow_path(follow), method: :delete, class: "rounded-md border border-line px-3 py-1.5 text-sm" %>
+        <% else %>
+          <%= button_to "Follow", user_follow_path(@user), class: "rounded-md bg-ink px-3 py-1.5 text-sm text-paper" %>
+        <% end %>
+        <%= button_to "Message", conversations_path(username: @user.username), class: "rounded-md border border-line px-3 py-1.5 text-sm" %>
+      <% elsif user_signed_in? %>
+        <%= link_to "Edit profile", edit_user_registration_path, class: "rounded-md border border-line px-3 py-1.5 text-sm" %>
+      <% end %>
+    </div>
   </div>
+</section>
 
-</div>
+<div class="mt-8">
+  <h2 class="font-serif text-xl text-ink">Posts</h2>
+  <div class="mt-2">
+    <%= render @posts %>
+    <% if @posts.empty? %>
+      <p class="mt-4 text-sm text-muted">No posts yet.</p>
+    <% end %>
+  </div>
 </div>

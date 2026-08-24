@@ -1,16 +1,32 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>SocialRails</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= render "layouts/nav" %>
-
-<%= yield %>
-
-</body>
+<html lang="en">
+  <head>
+    <title><%= content_for(:title) || "SocialRails" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="SocialRails">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="min-h-screen font-sans antialiased">
+    <%= render "layouts/nav" %>
+    <% if notice.present? || alert.present? %>
+      <div class="mx-auto max-w-5xl px-4 pt-4">
+        <% if notice.present? %>
+          <p class="rounded-md border border-line bg-card px-3 py-2 text-sm text-ink"><%= notice %></p>
+        <% end %>
+        <% if alert.present? %>
+          <p class="mt-2 rounded-md border border-rail/30 bg-card px-3 py-2 text-sm text-rail"><%= alert %></p>
+        <% end %>
+      </div>
+    <% end %>
+    <main class="mx-auto max-w-5xl px-4 py-8">
+      <%= yield %>
+    </main>
+  </body>
 </html>

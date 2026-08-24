@@ -1,0 +1,24 @@
+<% page_title "Messages" %>
+
+<h1 class="font-serif text-3xl text-ink">Messages</h1>
+<p class="mt-1 text-sm text-muted">Direct, between two people. Not a group inbox.</p>
+
+<ul class="mt-6 divide-y divide-line rounded-lg border border-line bg-card">
+  <% @conversations.each do |conversation| %>
+    <% other = conversation.other_than(current_user) %>
+    <% next unless other %>
+    <% last = conversation.direct_messages.max_by(&:created_at) %>
+    <li>
+      <%= link_to conversation_path(conversation), class: "flex items-center gap-3 px-4 py-3 hover:bg-paper" do %>
+        <%= avatar_tag other %>
+        <div class="min-w-0 flex-1">
+          <p class="font-medium text-ink"><%= other.name %></p>
+          <p class="truncate text-sm text-muted"><%= last&.body || "No messages yet" %></p>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<% if @conversations.none? %>
+  <p class="mt-6 text-sm text-muted">Open someone’s profile and send a message.</p>
+<% end %>

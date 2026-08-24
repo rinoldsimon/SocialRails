@@ -1,13 +1,9 @@
-class Comment < ActiveRecord::Base
-	resourcify
-	
-	belongs_to :post
-	belongs_to :user
+class Comment < ApplicationRecord
+  belongs_to :post
+  belongs_to :user
+  has_many :likes, as: :likeable, dependent: :destroy
 
-	include PublicActivity::Model
-	tracked owner: ->(controller, model) { controller && controller.current_user }
-	 
-	acts_as_likeable
+  validates :body, presence: true, length: { maximum: 280 }
 
-	default_scope -> { order('created_at ASC') }
+  scope :oldest, -> { order(created_at: :asc) }
 end

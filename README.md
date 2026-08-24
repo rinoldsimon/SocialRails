@@ -1,48 +1,52 @@
-Please read companion blog post: https://learnrubyblog.wordpress.com/2015/05/16/32-is-it-easy-to-build-a-social-network-using-rails/
+# SocialRails
 
-SocialRails is a social networking site built with Ruby on Rails, Bootstrap and jQuery 
+A chronological town square for builders. Rails 8, Hotwire, Postgres. Newest first. No ranking. No ads.
 
-### How to get up and running
+## Demo
 
-    $ git clone https://github.com/rinoldsimon/SocialRails.git
-    $ cd SocialRails
-    $ bundle
-    $ rake db:migrate
-    $ rails s
-    
-### Declare the provider in config/initializers/devise.rb
+```bash
+export PATH="/opt/homebrew/opt/ruby@3.4/bin:/opt/homebrew/opt/postgresql@16/bin:$PATH"
+cd /Users/rinold/Work/SocialRails
+bin/setup
+bin/dev
+```
 
-     config.omniauth :facebook, "YOUR APP SECRET", "YOUR APP ID", :secure_image_url => true
-     config.omniauth :github, "YOUR APP SECRET", "YOUR APP ID", :scope =>'user,public_repo'
-     
-### Setting up ActionMailer
+Open http://localhost:3000
 
-###### config/environments/development.rb
+Local mail (password reset, etc.) is at http://localhost:3000/letter_opener — not a real inbox.
 
-     config.action_mailer.default_url_options = { host: 'localhost:3000' }
-     
-     config.action_mailer.delivery_method = :smtp
-     ActionMailer::Base.smtp_settings = {
-        :address => "smtp.gmail.com",
-        :port    => 587,
-        :domain  => "localhost:3000",
-        :user_name  => "your user name",
-        :password   => "your password",
-        :authentication => :plain,
-        :enable_starttls_auto => true
-      }
-      
-###### config/environments/production.rb
+Demo login: `maya@socialrails.dev` / `demo1234`  
+(also arjun, lena, theo, priya, jonah, sofia, kenji @ socialrails.dev)
 
-     config.action_mailer.default_url_options = { host: 'example.com' }
-     
-     config.action_mailer.delivery_method = :smtp
-     ActionMailer::Base.smtp_settings = {
-        :address => "smtp.gmail.com",
-        :port    => 587,
-        :domain  => "example.com",
-        :user_name  => "your user name",
-        :password   => "your password",
-        :authentication => :plain,
-        :enable_starttls_auto => true
-      }
+## What I need from you to go live
+
+Nothing is required to run locally.
+
+| You create | I wire |
+| --- | --- |
+| Render account (free web) | `render.yaml` + this README |
+| Neon Postgres (paste `DATABASE_URL`) | Production DB |
+| Google OAuth client ID + secret (optional) | Sign in with Google |
+| GitHub OAuth app ID + secret (optional) | Sign in with GitHub |
+| Resend API key + a domain you own (optional) | Password-reset mail to real inboxes |
+| `SECRET_KEY_BASE` (`bin/rails secret`) | Render env |
+
+OAuth callback URLs:
+
+- `http://localhost:3000/users/auth/google_oauth2/callback`
+- `https://YOUR-SERVICE.onrender.com/users/auth/google_oauth2/callback`
+- same pattern for `/users/auth/github/callback`
+
+Until OAuth keys exist, use email + password or a demo account.
+
+Until a domain is verified with Resend, confirmation/reset mail will not reach other people’s inboxes. Google/GitHub login does not need mail.
+
+## Render
+
+1. New Web Service from this repo, Ruby, build `bin/render-build.sh`, start `bundle exec puma -C config/puma.rb`.
+2. Env: `DATABASE_URL`, `SECRET_KEY_BASE`, `APP_HOST` (your onrender host), optional OAuth and `RESEND_API_KEY`.
+3. First deploy: set `FORCE_SEEDS=1` once so demo people exist, then unset it.
+
+## Stack
+
+Rails 8.1, Ruby 3.4, PostgreSQL, Hotwire, Tailwind, Devise, Pundit, Action Cable (async on a single process).

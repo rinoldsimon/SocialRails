@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, "Times New Roman", serif;
+  --color-paper: #f3eee4;
+  --color-card: #fbf8f2;
+  --color-ink: #1a1714;
+  --color-muted: #6b645b;
+  --color-line: #ddd4c6;
+  --color-rail: #9a3412;
+  --color-rail-dark: #7c2d12;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.rail-mark {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.prose-post a {
+  color: var(--color-rail);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.demo-avatar {
+  display: inline-flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-paper);
+}
+
+.square-demo .demo-post,
+.square-demo .demo-comment,
+.square-demo .demo-message,
+.square-demo .demo-follow-on,
+.square-demo .demo-like-on {
+  display: none;
+}
+
+.square-demo[data-scene="follow"] .demo-follow-idle {
+  display: none;
+}
+
+.square-demo[data-scene="follow"] .demo-follow-on {
+  display: inline-block;
+}
+
+.square-demo[data-scene="post"] .demo-post,
+.square-demo[data-scene="like"] .demo-post,
+.square-demo[data-scene="comment"] .demo-post,
+.square-demo[data-scene="message"] .demo-post {
+  display: block;
+}
+
+.square-demo[data-scene="like"] .demo-like-idle,
+.square-demo[data-scene="comment"] .demo-like-idle,
+.square-demo[data-scene="message"] .demo-like-idle {
+  display: none;
+}
+
+.square-demo[data-scene="like"] .demo-like-on,
+.square-demo[data-scene="comment"] .demo-like-on,
+.square-demo[data-scene="message"] .demo-like-on {
+  display: block;
+}
+
+.square-demo[data-scene="comment"] .demo-comment,
+.square-demo[data-scene="message"] .demo-comment {
+  display: block;
+}
+
+.square-demo[data-scene="message"] .demo-message {
+  display: block;
+}
+
+.square-demo[data-scene="follow"] .demo-follow,
+.square-demo[data-scene="post"] .demo-post,
+.square-demo[data-scene="like"] .demo-like-on,
+.square-demo[data-scene="comment"] .demo-comment,
+.square-demo[data-scene="message"] .demo-message {
+  animation: demo-in 420ms ease-out;
+}
+
+@keyframes demo-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .square-demo [class] {
+    animation: none !important;
+  }
+}

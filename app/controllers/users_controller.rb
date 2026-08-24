@@ -1,35 +1,14 @@
 class UsersController < ApplicationController
-  
   def index
-    @users = User.all
-    if params[:search]
-      @users = User.search(params[:search]).order("created_at DESC")
-    else
-      @users = User.all.order('created_at DESC')
-    end
+    authorize User
+    @query = params[:q].to_s.strip
+    @users = User.order(:name)
+    @users = @users.where("name ILIKE :q OR username ILIKE :q", q: "%#{@query}%") if @query.present?
   end
 
   def show
-  	@user = User.find(params[:id])
-    @messages = @user.messages.all
-    @message = @user.messages.build
-  end
-
-  def like
-      if params[:likeable_type] == "Post"
-          @likeable = Post.find(params[:likeable_id])
-      else
-          @likeable = Comment.find(params[:likeable_id])
-      end
-  current_user.like!(@likeable)
-  end
-  
-  def unlike
-      if params[:likeable_type] == "Post"
-          @likeable = Post.find(params[:likeable_id])
-      else
-          @likeable = Comment.find(params[:likeable_id])
-      end
-  current_user.unlike!(@likeable)
+    @user = User.find_by!(username: params[:username])
+    authorize @user
+    @posts = @user.posts.newest.includes(:likes, comments: :user)
   end
 end

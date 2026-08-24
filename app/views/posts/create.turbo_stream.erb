@@ -1,0 +1,6 @@
+<%= turbo_stream.prepend "posts" do %>
+  <%= render @post %>
+<% end %>
+<%= turbo_stream.replace "composer" do %>
+  <%= render "posts/form", post: Post.new %>
+<% end %>

@@ -1,44 +1,37 @@
-<%= div_for post do %>
-
-  <article class="timeline-entry left-aligned">
-    
-    <div class="timeline-entry-inner">
-      <time class="timeline-time" ><span><%= time_ago_in_words(post.created_at) %> ago</span></time>
-      
-      <div class="timeline-icon bg-secondary">
-        <i class="entypo-suitcase"></i>
+<article id="<%= dom_id(post) %>" class="border-b border-line py-5">
+  <div class="flex gap-3">
+    <%= link_to user_path(post.user) do %><%= avatar_tag post.user %><% end %>
+    <div class="min-w-0 flex-1">
+      <div class="flex flex-wrap items-baseline gap-x-2 text-sm">
+        <%= link_to post.user.name, user_path(post.user), class: "font-medium text-ink hover:text-rail" %>
+        <span class="text-muted">@<%= post.user.username %></span>
+        <span class="text-muted">· <%= formatted_time(post.created_at) %></span>
       </div>
-      
-      <div class="timeline-label">
-        <h2>Added a <%= link_to_unless_current post.class, post %><%= simple_format post.content %>
-
-        <% if post.avatar.present? %>
-
-              <% file = post.avatar.url %>
-              <% extension = post.avatar.file.extension.downcase %>
-
-              <% if %w{jpg png jpeg gif bmp tiff}.include?(extension) %>
-                <%= link_to "view image", post.avatar_url %>
-              <% elsif %w{mp4 mov avi mpg mpeg flv}.include?(extension) %>
-                <%= link_to "play video", post.avatar_url %>
-              <% elsif %w{mp3 wav}.include?(extension) %>
-                <%= link_to "play audio", post.avatar_url %>
-              <% else %>
-                <%= link_to "download attatchment", post.avatar_url %> <%= extension %>
-              <% end %>
-              
-        <% end %></h2>
-
-        <p>added by <%= link_to post.user.name, post.user %> <strong><%= link_to pluralize(post.comments.count, 'comment'), post %>
-        <%= pluralize(post.likers(User).count, 'like')%></strong> 
-        <% if post.likers(User).count > 0 %>
-          <% users= post.likers(User) %>                 
-          (<% for u in users %>| <%= link_to u.name, u %>
-           <% end %>|)
-        <% end %></p>
+      <p class="mt-2 whitespace-pre-wrap text-[15px] leading-relaxed text-ink"><%= post.body %></p>
+      <% if post.link_url.present? %>
+        <p class="prose-post mt-2 truncate text-sm">
+          <%= link_to post.link_url, post.link_url, target: "_blank", rel: "noreferrer" %>
+        </p>
+      <% end %>
+      <div class="mt-3 flex items-center gap-4 text-sm text-muted">
+        <div id="<%= dom_id(post, :like) %>">
+          <%= render "likes/button", likeable: post %>
+        </div>
+        <span><%= pluralize(post.comments.size, "comment") %></span>
+        <% if user_signed_in? && policy(post).destroy? %>
+          <%= button_to "Remove", post_path(post), method: :delete, class: "hover:text-rail", form: { data: { turbo_confirm: "Remove this post?" } } %>
+        <% end %>
       </div>
+
+      <% if user_signed_in? %>
+        <div id="<%= dom_id(post, :comments) %>" class="mt-4 space-y-3">
+          <%= render post.comments.sort_by(&:created_at) %>
+        </div>
+        <%= form_with model: [post, Comment.new], class: "mt-3 flex gap-2" do |f| %>
+          <%= f.text_field :body, placeholder: "Reply…", maxlength: 280, class: "w-full rounded-md border border-line bg-paper px-3 py-1.5 text-sm outline-none focus:border-rail" %>
+          <%= f.submit "Reply", class: "rounded-md border border-line px-3 py-1.5 text-sm text-muted hover:text-ink" %>
+        <% end %>
+      <% end %>
     </div>
-    
-  </article>  
-
-<% end %>
+  </div>
+</article>

@@ -1,9 +1,11 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id: 1
-  content: MyText
+  user: one
+  body: MyText
+  link_url: MyString
 
 two:
-  user_id: 1
-  content: MyText
+  user: two
+  body: MyText
+  link_url: MyString
