@@ -8,6 +8,7 @@ services:
     plan: free
     buildCommand: chmod +x bin/render-build.sh && ./bin/render-build.sh
     startCommand: bundle exec puma -C config/puma.rb
+    healthCheckPath: /up
     envVars:
       - key: RAILS_ENV
         value: production

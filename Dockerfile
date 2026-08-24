@@ -3,7 +3,7 @@
 
 # This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
 # docker build -t social_rails .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name social_rails social_rails
+# docker run -d -p 3000:3000 -e RAILS_MASTER_KEY=<value from config/master.key> --name social_rails social_rails
 
 # For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
 
@@ -72,6 +72,7 @@ COPY --chown=rails:rails --from=build /rails /rails
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
-# Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 80
-CMD ["./bin/thrust", "./bin/rails", "server"]
+# Render and most PaaS inject PORT. Do not use Thruster here: it listens on 80
+# and proxies to 3000, which 502s if Rails never boots.
+EXPOSE 3000
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]

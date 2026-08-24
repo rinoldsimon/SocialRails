@@ -1,7 +1,11 @@
 #!/bin/bash -e
 
-# If running the rails server then create or migrate existing database
-if [ "${@: -2:1}" == "./bin/rails" ] && [ "${@: -1:1}" == "server" ]; then
+if [ -z "${SECRET_KEY_BASE}" ] && [ -z "${RAILS_MASTER_KEY}" ]; then
+  echo "Set SECRET_KEY_BASE or RAILS_MASTER_KEY" >&2
+  exit 1
+fi
+
+if [ "$1" = "bundle" ] || [ "$1" = "./bin/rails" ] || [ "$1" = "puma" ] || [ "${@: -1}" = "server" ]; then
   ./bin/rails db:prepare
 fi
 

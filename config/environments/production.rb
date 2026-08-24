@@ -59,8 +59,10 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: ENV.fetch("APP_HOST", "socialrails.onrender.com"), protocol: "https" }
 
+  config.hosts << "localhost"
   config.hosts << /.*\.onrender\.com/
   config.hosts << ENV["APP_HOST"] if ENV["APP_HOST"].present?
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_cable.allowed_request_origins = [
     /https:\/\/.*\.onrender\.com/,
