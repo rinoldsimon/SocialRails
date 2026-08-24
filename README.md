@@ -2,7 +2,11 @@
 
 A chronological town square for builders. Newest first. No ranking. No ads.
 
-Rails 8, Hotwire, PostgreSQL, Devise, Pundit.
+**Live:** [https://socialrails.onrender.com](https://socialrails.onrender.com)
+
+Rails 8, Hotwire, PostgreSQL, Devise, Pundit. Hosted on Render with Postgres on Neon.
+
+Demo accounts (password `demo1234`): `maya@socialrails.dev`, `arjun@socialrails.dev`, `lena@socialrails.dev`.
 
 ## Run locally
 
@@ -15,12 +19,6 @@ bin/rails server
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Demo accounts (password `demo1234`):
-
-- `maya@socialrails.dev`
-- `arjun@socialrails.dev`
-- `lena@socialrails.dev`
-
 Development mail (password reset) is at [http://localhost:3000/letter_opener](http://localhost:3000/letter_opener).
 
 ## Features
@@ -32,21 +30,19 @@ Development mail (password reset) is at [http://localhost:3000/letter_opener](ht
 
 ## Deploy
 
-Host on Render (native **Ruby**, not Docker) with Postgres from Neon.
-
-Environment variables:
+Docker on Render. Set these on the web service:
 
 | Variable | Required |
 | --- | --- |
 | `DATABASE_URL` | yes |
 | `SECRET_KEY_BASE` | yes |
 | `RAILS_MASTER_KEY` | yes (from `config/master.key`, not committed) |
-| `APP_HOST` | yes (e.g. `your-service.onrender.com`) |
+| `APP_HOST` | yes (`socialrails.onrender.com`) |
 | `FORCE_SEEDS` | first deploy only (`1`) |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | optional |
 | `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | optional |
 
 OAuth callbacks:
 
-- `https://YOUR-SERVICE.onrender.com/users/auth/google_oauth2/callback`
-- `https://YOUR-SERVICE.onrender.com/users/auth/github/callback`
+- `https://socialrails.onrender.com/users/auth/google_oauth2/callback`
+- `https://socialrails.onrender.com/users/auth/github/callback`
